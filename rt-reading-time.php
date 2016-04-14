@@ -94,38 +94,42 @@ class readingTimeWP {
 
 	// Calculate reading time by running it through the_content
 	public function rt_add_reading_time_before_content($content) {
-		$rtReadingOptions = get_option('rt_reading_time_options');
+		if (get_post_type() === 'post') {
+			$rtReadingOptions = get_option('rt_reading_time_options');
 
-		$originalContent = $content;
-		$rtPost = get_the_ID();
+			$originalContent = $content;
+			$rtPost = get_the_ID();
 
-		$this->rt_calculate_reading_time($rtPost, $rtReadingOptions);
+			$this->rt_calculate_reading_time($rtPost, $rtReadingOptions);
 
-		$label = $rtReadingOptions['label'];
-		$postfix = $rtReadingOptions['postfix'];
+			$label = $rtReadingOptions['label'];
+			$postfix = $rtReadingOptions['postfix'];
 
-		if(in_array('get_the_excerpt', $GLOBALS['wp_current_filter'])) {
-			return $content;
+			if(in_array('get_the_excerpt', $GLOBALS['wp_current_filter'])) {
+				return $content;
+			}
+
+			$content = '<span class="rt-reading-time" style="display: block;">'.'<span class="rt-label">'.$label.'</span>'.'<span class="rt-time">'.$this->readingTime.'</span>'.'<span class="rt-label"> '.$postfix.'</span>'.'</span>';
+			$content .= $originalContent;
 		}
-
-		$content = '<span class="rt-reading-time" style="display: block;">'.'<span class="rt-label">'.$label.'</span>'.'<span class="rt-time">'.$this->readingTime.'</span>'.'<span class="rt-label"> '.$postfix.'</span>'.'</span>';
-		$content .= $originalContent;
-		return $content;
+        return $content;
 	}
 
 	public function rt_add_reading_time_before_excerpt($content) {
-		$rtReadingOptions = get_option('rt_reading_time_options');
+		if (get_post_type() === 'post') {
+			$rtReadingOptions = get_option('rt_reading_time_options');
 
-		$originalContent = $content;
-		$rtPost = get_the_ID();
+			$originalContent = $content;
+			$rtPost = get_the_ID();
 
-		$this->rt_calculate_reading_time($rtPost, $rtReadingOptions);
+			$this->rt_calculate_reading_time($rtPost, $rtReadingOptions);
 
-		$label = $rtReadingOptions['label'];
-		$postfix = $rtReadingOptions['postfix'];
+			$label = $rtReadingOptions['label'];
+			$postfix = $rtReadingOptions['postfix'];
 
-		$content = '<span class="rt-reading-time" style="display: block;">'.'<span class="rt-label">'.$label.'</span>'.'<span class="rt-time">'.$this->readingTime.'</span>'.'<span class="rt-label"> '.$postfix.'</span>'.'</span>';
-		$content .= $originalContent;
+			$content = '<span class="rt-reading-time" style="display: block;">'.'<span class="rt-label">'.$label.'</span>'.'<span class="rt-time">'.$this->readingTime.'</span>'.'<span class="rt-label"> '.$postfix.'</span>'.'</span>';
+			$content .= $originalContent;
+		}
 		return $content;
 	}
 
