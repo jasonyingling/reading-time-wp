@@ -37,7 +37,7 @@ class readingTimeWP {
 			'postfix_singular' => 'minute',
 			'wpm' => 300,
 			'before_content' => 'true',
-			'before_excerpt' => 'false',
+			'before_excerpt' => 'true',
 		);
 
 		$rtReadingOptions = get_option('rt_reading_time_options');
@@ -46,11 +46,11 @@ class readingTimeWP {
 		add_option('rt_reading_time_options', $defaultSettings);
 		add_action('admin_menu', array($this, 'rt_reading_time_admin_actions'));
 
-		if ($rtReadingOptions['before_content'] === 'true') {
+		if ( isset($rtReadingOptions['before_content']) && $rtReadingOptions['before_content'] === 'true' ) {
 			add_filter('the_content', array($this, 'rt_add_reading_time_before_content'));
 		}
 
-		if($rtReadingOptions['before_excerpt'] === 'true') {
+		if( isset($rtReadingOptions['before_excerpt']) && $rtReadingOptions['before_excerpt'] === 'true' ) {
 			add_filter('get_the_excerpt', array($this, 'rt_add_reading_time_before_excerpt'));
 		}
 
