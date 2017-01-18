@@ -34,8 +34,10 @@ class readingTimeWP {
 		$defaultSettings = array(
 			'label' => 'Reading Time: ',
 			'postfix' => 'minutes',
+			'postfix_singular' => 'minute',
 			'wpm' => 300,
 			'before_content' => 'true',
+			'before_excerpt' => 'false',
 		);
 
 		$rtReadingOptions = get_option('rt_reading_time_options');
@@ -45,12 +47,13 @@ class readingTimeWP {
 		add_action('admin_menu', array($this, 'rt_reading_time_admin_actions'));
 
 		if ($rtReadingOptions['before_content'] === 'true') {
-
 			add_filter('the_content', array($this, 'rt_add_reading_time_before_content'));
-
-			add_filter('get_the_excerpt', array($this, 'rt_add_reading_time_before_excerpt'));
-
 		}
+
+		if($rtReadingOptions['before_excerpt'] === 'true') {
+			add_filter('get_the_excerpt', array($this, 'rt_add_reading_time_before_excerpt'));
+		}
+
 	}
 
 	public function rt_calculate_reading_time($rtPostID, $rtOptions) {
@@ -70,6 +73,7 @@ class readingTimeWP {
 		extract (shortcode_atts(array(
 			'label' => '',
 			'postfix' => '',
+			'postfix_singular' => '',
 		), $atts));
 
 		$rtReadingOptions = get_option('rt_reading_time_options');
@@ -78,8 +82,14 @@ class readingTimeWP {
 
 		$this->rt_calculate_reading_time($rtPost, $rtReadingOptions);
 
+		if($this->readingTime > 1) {
+			$calculatedPostfix = $postfix;
+		} else {
+			$calculatedPostfix = $postfix_singular;
+		}
+
 		return "
-		<span class='span-reading-time'>$label $this->readingTime $postfix</span>
+		<span class='span-reading-time'>$label $this->readingTime $calculatedPostfix</span>
 		";
 	}
 
@@ -103,12 +113,19 @@ class readingTimeWP {
 
 		$label = $rtReadingOptions['label'];
 		$postfix = $rtReadingOptions['postfix'];
+		$postfix_singular = $rtReadingOptions['postfix_singular'];
 
 		if(in_array('get_the_excerpt', $GLOBALS['wp_current_filter'])) {
 			return $content;
 		}
 
-		$content = '<span class="rt-reading-time" style="display: block;">'.'<span class="rt-label">'.$label.'</span>'.'<span class="rt-time">'.$this->readingTime.'</span>'.'<span class="rt-label"> '.$postfix.'</span>'.'</span>';
+		if($this->readingTime > 1) {
+			$calculatedPostfix = $postfix;
+		} else {
+			$calculatedPostfix = $postfix_singular;
+		}
+
+		$content = '<span class="rt-reading-time" style="display: block;">'.'<span class="rt-label">'.$label.'</span>'.'<span class="rt-time">'.$this->readingTime.'</span>'.'<span class="rt-label"> '.$calculatedPostfix.'</span>'.'</span>';
 		$content .= $originalContent;
 		return $content;
 	}
@@ -123,8 +140,16 @@ class readingTimeWP {
 
 		$label = $rtReadingOptions['label'];
 		$postfix = $rtReadingOptions['postfix'];
+		$postfix_singular = $rtReadingOptions['postfix_singular'];
 
-		$content = '<span class="rt-reading-time" style="display: block;">'.'<span class="rt-label">'.$label.'</span>'.'<span class="rt-time">'.$this->readingTime.'</span>'.'<span class="rt-label"> '.$postfix.'</span>'.'</span>';
+		if($this->readingTime > 1) {
+			$calculatedPostfix = $postfix;
+		} else {
+			$calculatedPostfix = $postfix_singular;
+		}
+
+
+		$content = '<span class="rt-reading-time" style="display: block;">'.'<span class="rt-label">'.$label.'</span>'.'<span class="rt-time">'.$this->readingTime.'</span>'.'<span class="rt-label"> '.$calculatedPostfix.'</span>'.'</span>';
 		$content .= $originalContent;
 		return $content;
 	}
