@@ -69,6 +69,6 @@
     <div class="rt-shortcode-hint">
 	    <p>Shortcode: [rt_reading_time label="Reading Time:" postfix="minutes" postfix_singular="minute"]</p>
 	    <p>Or simply use [rt_reading_time] to return the number with no labels.</p>
-	    <p>Want to insert the reading time into your theme? Use do_shortcode('[rt_reading_rtime]')</p>
+	    <p>Want to insert the reading time into your theme? Use do_shortcode('[rt_reading_time]')</p>
     </div>
 </div>
