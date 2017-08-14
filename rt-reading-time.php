@@ -102,44 +102,55 @@ class readingTimeWP {
 		add_options_page("Reading Time WP Settings", "Reading Time WP", "manage_options", "rt-reading-time-settings", array($this, "rt_reading_time_admin"));
 	}
 
-	// Calculate reading time by running it through the_content
+    // Calculate reading time by running it through the_content
 	public function rt_add_reading_time_before_content($content) {
-		if (get_post_type() === 'post') {
-			$rtReadingOptions = get_option('rt_reading_time_options');
+		$rtReadingOptions = get_option('rt_reading_time_options');
 
-			$originalContent = $content;
-			$rtPost = get_the_ID();
+		$originalContent = $content;
+		$rtPost = get_the_ID();
 
-			$this->rt_calculate_reading_time($rtPost, $rtReadingOptions);
+		$this->rt_calculate_reading_time($rtPost, $rtReadingOptions);
 
-			$label = $rtReadingOptions['label'];
-			$postfix = $rtReadingOptions['postfix'];
+		$label = $rtReadingOptions['label'];
+		$postfix = $rtReadingOptions['postfix'];
+		$postfix_singular = $rtReadingOptions['postfix_singular'];
 
-			if(in_array('get_the_excerpt', $GLOBALS['wp_current_filter'])) {
-				return $content;
-			}
-
-			$content = '<span class="rt-reading-time" style="display: block;">'.'<span class="rt-label">'.$label.'</span>'.'<span class="rt-time">'.$this->readingTime.'</span>'.'<span class="rt-label"> '.$postfix.'</span>'.'</span>';
-			$content .= $originalContent;
+		if(in_array('get_the_excerpt', $GLOBALS['wp_current_filter'])) {
+			return $content;
 		}
-        return $content;
+
+		if($this->readingTime > 1) {
+			$calculatedPostfix = $postfix;
+		} else {
+			$calculatedPostfix = $postfix_singular;
+		}
+
+		$content = '<span class="rt-reading-time" style="display: block;">'.'<span class="rt-label">'.$label.'</span>'.'<span class="rt-time">'.$this->readingTime.'</span>'.'<span class="rt-label"> '.$calculatedPostfix.'</span>'.'</span>';
+		$content .= $originalContent;
+		return $content;
 	}
 
 	public function rt_add_reading_time_before_excerpt($content) {
-		if (get_post_type() === 'post') {
-			$rtReadingOptions = get_option('rt_reading_time_options');
+		$rtReadingOptions = get_option('rt_reading_time_options');
 
-			$originalContent = $content;
-			$rtPost = get_the_ID();
+		$originalContent = $content;
+		$rtPost = get_the_ID();
 
-			$this->rt_calculate_reading_time($rtPost, $rtReadingOptions);
+		$this->rt_calculate_reading_time($rtPost, $rtReadingOptions);
 
-			$label = $rtReadingOptions['label'];
-			$postfix = $rtReadingOptions['postfix'];
+		$label = $rtReadingOptions['label'];
+		$postfix = $rtReadingOptions['postfix'];
+		$postfix_singular = $rtReadingOptions['postfix_singular'];
 
-			$content = '<span class="rt-reading-time" style="display: block;">'.'<span class="rt-label">'.$label.'</span>'.'<span class="rt-time">'.$this->readingTime.'</span>'.'<span class="rt-label"> '.$postfix.'</span>'.'</span>';
-			$content .= $originalContent;
+		if($this->readingTime > 1) {
+			$calculatedPostfix = $postfix;
+		} else {
+			$calculatedPostfix = $postfix_singular;
 		}
+
+
+		$content = '<span class="rt-reading-time" style="display: block;">'.'<span class="rt-label">'.$label.'</span>'.'<span class="rt-time">'.$this->readingTime.'</span>'.'<span class="rt-label"> '.$calculatedPostfix.'</span>'.'</span>';
+		$content .= $originalContent;
 		return $content;
 	}
 
