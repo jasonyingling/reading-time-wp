@@ -3,8 +3,8 @@ Contributors: yingling017
 Donate link: http://jasonyingling.me
 Tags: reading time, estimated time, word count, time, posts, page, reading
 Requires at least: 3.0.1
-Tested up to: 4.4.2
-Stable tag: 1.0.7
+Tested up to: 4.8.1
+Stable tag: 1.0.9
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -48,6 +48,12 @@ Just edit the Reading time label and Reading time postfix fields in the Reading 
 2. The options available in Reading Time WP.
 
 == Changelog ==
+
+= 1.0.9 =
+* Fixed typo in shortcode and implemented better sanitization from github
+
+= 1.0.8 =
+* Added in singular postfix setting. Added in separate control to display reading time on excerpts.
 
 = 1.0.7 =
 * Switched to using span elements instead of divs for inserting before content and excerpt
@@ -98,3 +104,9 @@ Updated the way the word count is calculated to be more accurate when using imag
 
 = 1.0.7 =
 Switched to using span elements instead of divs for inserting before content and excerpt
+
+= 1.0.8 =
+Added in singular postfix setting. Added in separate control to display reading time on excerpts.
+
+= 1.0.9 =
+Fixed typo in shortcode and implemented better sanitization from github

@@ -3,7 +3,7 @@
  * Plugin Name: Reading Time WP
  * Plugin URI: http://jasonyingling.me/reading-time-wp/
  * Description: Add an estimated reading time to your posts.
- * Version: 1.0.7
+ * Version: 1.0.9
  * Author: Jason Yingling
  * Author URI: http://jasonyingling.me
  * License: GPL2
