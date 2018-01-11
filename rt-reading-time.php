@@ -59,9 +59,14 @@ class readingTimeWP {
 	public function rt_calculate_reading_time($rtPostID, $rtOptions) {
 
 		$rtContent = get_post_field('post_content', $rtPostID);
+		$number_of_images = substr_count(strtolower($rtContent), '<img ');
 		$strippedContent = strip_shortcodes($rtContent);
 		$stripTagsContent = strip_tags($strippedContent);
 		$wordCount = str_word_count($stripTagsContent);
+
+		$image_value_in_words = 12 * (int) $rtOptions['wpm'] / 60; // 12 secondes per images
+		$wordCount += $image_value_in_words * $number_of_images;
+		
 		$this->readingTime = ceil($wordCount / $rtOptions['wpm']);
 
 		return $this->readingTime;
