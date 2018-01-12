@@ -3,8 +3,8 @@ Contributors: yingling017
 Donate link: http://jasonyingling.me
 Tags: reading time, estimated time, word count, time, posts, page, reading
 Requires at least: 3.0.1
-Tested up to: 4.9
-Stable tag: 1.0.10
+Tested up to: 4.9.1
+Stable tag: 1.1.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -48,6 +48,9 @@ Just edit the Reading time label and Reading time postfix fields in the Reading 
 2. The options available in Reading Time WP.
 
 == Changelog ==
+
+= 1.1.0 =
+* Added images into reading time calculations based on Medium's suggestion. https://blog.medium.com/read-time-and-you-bc2048ab620c
 
 = 1.0.10 =
 * Tested in WordPress 4.9
@@ -116,3 +119,6 @@ Fixed typo in shortcode and implemented better sanitization from github
 
 = 1.0.10 =
 Tested in WordPress 4.9
+
+= 1.1.0 =
+Added images into reading time calculations based on Medium's suggestion. https://blog.medium.com/read-time-and-you-bc2048ab620c

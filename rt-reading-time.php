@@ -3,7 +3,7 @@
  * Plugin Name: Reading Time WP
  * Plugin URI: http://jasonyingling.me/reading-time-wp/
  * Description: Add an estimated reading time to your posts.
- * Version: 1.0.10
+ * Version: 1.1.0
  * Author: Jason Yingling
  * Author URI: http://jasonyingling.me
  * License: GPL2
@@ -38,6 +38,7 @@ class readingTimeWP {
 			'wpm' => 300,
 			'before_content' => 'true',
 			'before_excerpt' => 'true',
+			'exclude_images' => false
 		);
 
 		$rtReadingOptions = get_option('rt_reading_time_options');
@@ -64,13 +65,48 @@ class readingTimeWP {
 		$stripTagsContent = strip_tags($strippedContent);
 		$wordCount = str_word_count($stripTagsContent);
 
-		$image_value_in_words = 12 * (int) $rtOptions['wpm'] / 60; // 12 secondes per images
-		$wordCount += $image_value_in_words * $number_of_images;
-		
+		if ( isset($rtOptions['exclude_images'] ) && $rtOptions['exclude_images'] ) {
+			// Don't calculate images if they've been set to be excluded
+		} else {
+			// Calculate additional time added to post by images
+			$additional_words_for_images = $this->rt_calculate_images( $number_of_images, $rtOptions['wpm'] );
+			$wordCount += $additional_words_for_images;
+		}
+
 		$this->readingTime = ceil($wordCount / $rtOptions['wpm']);
+
+		// If the reading time is 0 then return it as < 1 instead of 0.
+		if ( $this->readingTime < 1 ) {
+			$this->readingTime = __('< 1', 'reading-time-wp');
+		}
 
 		return $this->readingTime;
 
+	}
+
+	/**
+	 * Adds additional reading time for images
+	 *
+	 * Calculate additional reading time added by images in posts. Based on calculations by Medium. https://blog.medium.com/read-time-and-you-bc2048ab620c
+	 *
+	 * @since 1.1.0
+	 *
+	 * @param int $total_images number of images in post
+	 * @param array $wpm words per minute
+	 * @return int Additional time added to the reading time by images
+	 */
+	public function rt_calculate_images( $total_images, $wpm ) {
+		$additional_time = 0;
+		// For the first image add 12 seconds, second image add 11, ..., for image 10+ add 3 seconds
+		for ( $i = 1; $i <= $total_images; $i++ ) {
+			if ( $i >= 10 ) {
+				$additional_time += 3 * (int) $wpm / 60;
+			} else {
+				$additional_time += (12 - ($i - 1) ) * (int) $wpm / 60;
+			}
+		}
+
+		return $additional_time;
 	}
 
 	public function rt_reading_time($atts, $content = null) {

@@ -19,6 +19,12 @@
             $readingTimeCheckExcerpt = 'false';
         }
 
+		if ( isset( $_POST['rt_reading_time_images'] ) && $_POST['rt_reading_time_images'] ) {
+			$reading_time_exclude_images = true;
+		} else {
+			$reading_time_exclude_images = false;
+		}
+
         $updateOptions = array(
         	'label' => $readingTimeLabel,
         	'postfix' => $readingTimePostfix,
@@ -26,6 +32,7 @@
 			'wpm' => $readingTimeWPM,
 			'before_content' => $readingTimeCheck,
             'before_excerpt' => $readingTimeCheckExcerpt,
+			'exclude_images' => $reading_time_exclude_images,
         );
 
         update_option('rt_reading_time_options', $updateOptions);
@@ -41,6 +48,7 @@
         $readingTimeWPM = $rtReadingOptions['wpm'];
         $readingTimeCheck = $rtReadingOptions['before_content'];
         $readingTimeCheckExcerpt = $rtReadingOptions['before_excerpt'];
+		$reading_time_exclude_images = $rtReadingOptions['exclude_images'];
     }
 ?>
 
@@ -60,6 +68,7 @@
 
 		<p><?php _e("Insert Reading Time before content: "); ?><input type="checkbox" name="rt_reading_time_check" <?php if ($readingTimeCheck === 'true') { echo 'checked'; } ?> size="20"><?php _e(""); ?></p>
         <p><?php _e("Insert Reading Time before excerpt: "); ?><input type="checkbox" name="rt_reading_time_check_excerpt" <?php if ($readingTimeCheckExcerpt === 'true') { echo 'checked'; } ?> size="20"><?php _e(""); ?></p>
+		<p><?php _e("Exclude images from the reading time: "); ?><input type="checkbox" name="rt_reading_time_images" <?php if ($reading_time_exclude_images === true) { echo 'checked'; } ?> size="20"><?php _e(""); ?></p>
 
         <p class="submit">
         <input type="submit" name="Submit" value="<?php _e('Update Options', 'rt_reading_time_trdom' ) ?>" />
