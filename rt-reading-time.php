@@ -1,15 +1,17 @@
 <?php
 /**
  * Plugin Name: Reading Time WP
- * Plugin URI: http://jasonyingling.me/reading-time-wp/
+ * Plugin URI: https://jasonyingling.me/reading-time-wp/
  * Description: Add an estimated reading time to your posts.
- * Version: 1.1.0
+ * Version: 1.2.0
  * Author: Jason Yingling
- * Author URI: http://jasonyingling.me
+ * Author URI: https://jasonyingling.me
  * License: GPL2
+ * Text Domain: reading-time-wp
+ * Domain Path: /languages
  */
 
- /*  Copyright 2016  Jason Yingling  (email : yingling017@gmail.com)
+ /*  Copyright 2018  Jason Yingling  (email : yingling017@gmail.com)
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License, version 2, as
@@ -32,13 +34,17 @@ class readingTimeWP {
 
 	public function __construct() {
 		$defaultSettings = array(
-			'label' => 'Reading Time: ',
-			'postfix' => 'minutes',
-			'postfix_singular' => 'minute',
+			'label' => __( 'Reading Time: ', 'reading-time-wp'),
+			'postfix' => __( 'minutes', 'reading-time-wp' ),
+			'postfix_singular' => __( 'minute', 'reading-time-wp' ),
 			'wpm' => 300,
 			'before_content' => 'true',
 			'before_excerpt' => 'true',
-			'exclude_images' => false
+			'exclude_images' => false,
+			'post_types' => array(
+				'post' => true,
+				'page' => true,
+			),
 		);
 
 		$rtReadingOptions = get_option('rt_reading_time_options');
@@ -52,7 +58,7 @@ class readingTimeWP {
 		}
 
 		if( isset($rtReadingOptions['before_excerpt']) && $rtReadingOptions['before_excerpt'] === 'true' ) {
-			add_filter('get_the_excerpt', array($this, 'rt_add_reading_time_before_excerpt'));
+			add_filter('get_the_excerpt', array($this, 'rt_add_reading_time_before_excerpt'), 1000);
 		}
 
 	}
@@ -72,6 +78,8 @@ class readingTimeWP {
 			$additional_words_for_images = $this->rt_calculate_images( $number_of_images, $rtOptions['wpm'] );
 			$wordCount += $additional_words_for_images;
 		}
+
+		$wordCount = apply_filters( 'rtwp_filter_wordcount', $wordCount );
 
 		$this->readingTime = ceil($wordCount / $rtOptions['wpm']);
 
@@ -115,7 +123,7 @@ class readingTimeWP {
 			'label' => '',
 			'postfix' => '',
 			'postfix_singular' => '',
-		), $atts));
+		), $atts, 'rt_reading_time'));
 
 		$rtReadingOptions = get_option('rt_reading_time_options');
 
@@ -140,12 +148,20 @@ class readingTimeWP {
 	}
 
 	public function rt_reading_time_admin_actions() {
-		add_options_page("Reading Time WP Settings", "Reading Time WP", "manage_options", "rt-reading-time-settings", array($this, "rt_reading_time_admin"));
+		add_options_page(__("Reading Time WP Settings", "reading-time-wp"), __( "Reading Time WP", "reading-time-wp" ), "manage_options", "rt-reading-time-settings", array($this, "rt_reading_time_admin"));
 	}
 
     // Calculate reading time by running it through the_content
 	public function rt_add_reading_time_before_content($content) {
 		$rtReadingOptions = get_option('rt_reading_time_options');
+
+		// Get the post type of the current post
+		$rtwp_current_post_type = get_post_type();
+
+		// If the current post type isn't included in the array of post types or it is and set to false, don't display it.
+		if ( ! isset( $rtReadingOptions['post_types'][$rtwp_current_post_type] ) || ! $rtReadingOptions['post_types'][$rtwp_current_post_type] ) {
+			return $content;
+		}
 
 		$originalContent = $content;
 		$rtPost = get_the_ID();
@@ -174,6 +190,14 @@ class readingTimeWP {
 	public function rt_add_reading_time_before_excerpt($content) {
 		$rtReadingOptions = get_option('rt_reading_time_options');
 
+		// Get the post type of the current post
+		$rtwp_current_post_type = get_post_type();
+
+		// If the current post type isn't included in the array of post types or it is and set to false, don't display it.
+		if ( ! isset( $rtReadingOptions['post_types'][$rtwp_current_post_type] ) || ! $rtReadingOptions['post_types'][$rtwp_current_post_type] ) {
+			return $content;
+		}
+
 		$originalContent = $content;
 		$rtPost = get_the_ID();
 
@@ -188,7 +212,6 @@ class readingTimeWP {
 		} else {
 			$calculatedPostfix = $postfix_singular;
 		}
-
 
 		$content = '<span class="rt-reading-time" style="display: block;">'.'<span class="rt-label">'.$label.'</span>'.'<span class="rt-time">'.$this->readingTime.'</span>'.'<span class="rt-label"> '.$calculatedPostfix.'</span>'.'</span>';
 		$content .= $originalContent;
