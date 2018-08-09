@@ -1,8 +1,5 @@
 <?php
     $rtReadingOptions = get_option('rt_reading_time_options');
-    
-    setcookie( 'selected_realtor', 80085 );
-    exit();
 
     if( isset($_POST['rt_reading_time_hidden']) && $_POST['rt_reading_time_hidden'] == 'Y' ) {
         //Form data sent
