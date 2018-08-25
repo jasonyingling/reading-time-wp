@@ -3,7 +3,7 @@
  * Plugin Name: Reading Time WP
  * Plugin URI: https://jasonyingling.me/reading-time-wp/
  * Description: Add an estimated reading time to your posts.
- * Version: 1.2.1
+ * Version: 1.2.2
  * Author: Jason Yingling
  * Author URI: https://jasonyingling.me
  * License: GPL2
@@ -41,11 +41,21 @@ class readingTimeWP {
 			'before_content' => 'true',
 			'before_excerpt' => 'true',
 			'exclude_images' => false,
-			'post_types' => array(
-				'post' => true,
-				'page' => true,
-			),
 		);
+
+		$rtwp_post_type_args = array(
+			'public' => true,
+		);
+		$rtwp_post_type_args = apply_filters('rtwp_post_type_args', $rtwp_post_type_args );
+
+		$rtwp_post_types = get_post_types( $rtwp_post_type_args );
+
+		foreach ( $rtwp_post_types as $rtwp_post_type ) {
+			if ( $rtwp_post_type === 'attachment' ) {
+				continue;
+			}
+			$defaultSettings['post_types'][$rtwp_post_type] = true;
+		}
 
 		$rtReadingOptions = get_option('rt_reading_time_options');
 
@@ -67,9 +77,11 @@ class readingTimeWP {
 
 		$rtContent = get_post_field('post_content', $rtPostID);
 		$number_of_images = substr_count(strtolower($rtContent), '<img ');
-		$strippedContent = strip_shortcodes($rtContent);
-		$stripTagsContent = strip_tags($strippedContent);
-		$wordCount = str_word_count($stripTagsContent);
+		if ( ! isset( $rtOptions['include_shortcodes'] ) ) {
+			$rtContent = strip_shortcodes($rtContent);
+		}
+		$rtContent = strip_tags($rtContent);
+		$wordCount = str_word_count($rtContent);
 
 		if ( isset($rtOptions['exclude_images'] ) && $rtOptions['exclude_images'] ) {
 			// Don't calculate images if they've been set to be excluded
@@ -159,7 +171,7 @@ class readingTimeWP {
 		$rtwp_current_post_type = get_post_type();
 
 		// If the current post type isn't included in the array of post types or it is and set to false, don't display it.
-		if ( ! isset( $rtReadingOptions['post_types'][$rtwp_current_post_type] ) || ! $rtReadingOptions['post_types'][$rtwp_current_post_type] ) {
+		if ( isset( $rtReadingOptions['post_types'] ) && ( ! isset( $rtReadingOptions['post_types'][$rtwp_current_post_type] ) || ! $rtReadingOptions['post_types'][$rtwp_current_post_type] ) ) {
 			return $content;
 		}
 
