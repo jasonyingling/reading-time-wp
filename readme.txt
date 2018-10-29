@@ -4,7 +4,7 @@ Donate link: http://jasonyingling.me
 Tags: reading time, estimated time, word count, time, posts, page, reading
 Requires at least: 3.0.1
 Tested up to: 4.9.8
-Stable tag: 1.2.2
+Stable tag: 1.2.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -69,6 +69,10 @@ Just hook into the `rtwp_filter_wordcount` filter and increment the word count t
 2. The options available in Reading Time WP.
 
 == Changelog ==
+
+= 1.2.3 = 
+* Fixing HTML output when using shortcode to match auto inserted reading times
+* Updating plugin to better meet WordPress Coding Standards
 
 = 1.2.2 =
 * Switched default for all post types to display reading time if option has not been set
