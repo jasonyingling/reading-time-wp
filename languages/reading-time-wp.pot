@@ -78,6 +78,10 @@ msgstr ""
 msgid "Exclude images from the reading time: "
 msgstr ""
 
+#: rt-reading-time-admin.php:90
+msgid "Include shortcodes in the reading time: "
+msgstr ""
+
 #: rt-reading-time-admin.php:91
 msgid "Select Post Types to Display Reading Time On"
 msgstr ""
@@ -130,7 +134,7 @@ msgid "Reading Time WP"
 msgstr ""
 
 #. Plugin URI of the plugin/theme
-msgid "http://jasonyingling.me/reading-time-wp/"
+msgid "https://jasonyingling.me/reading-time-wp/"
 msgstr ""
 
 #. Description of the plugin/theme
@@ -142,5 +146,5 @@ msgid "Jason Yingling"
 msgstr ""
 
 #. Author URI of the plugin/theme
-msgid "http://jasonyingling.me"
+msgid "https://jasonyingling.me"
 msgstr ""
