@@ -127,7 +127,7 @@ class Reading_Time_WP {
 		}
 
 		$rt_content = wp_strip_all_tags( $rt_content );
-		$word_count = str_word_count( $rt_content );
+		$word_count = count( preg_split( '/\s+/', $rt_content ) );
 
 		if ( isset( $rt_options['exclude_images'] ) && ! $rt_options['exclude_images'] ) {
 			// Calculate additional time added to post by images.
