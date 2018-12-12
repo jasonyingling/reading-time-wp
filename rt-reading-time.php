@@ -60,6 +60,8 @@ class Reading_Time_WP {
 	 * @since 1.0.0
 	 */
 	public function __construct() {
+		load_plugin_textdomain( 'reading-time-wp', false, basename( dirname( __FILE__ ) ) . '/languages/' );
+
 		$default_settings = array(
 			'label'              => __( 'Reading Time: ', 'reading-time-wp' ),
 			'postfix'            => __( 'minutes', 'reading-time-wp' ),
