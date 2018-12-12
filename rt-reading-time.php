@@ -7,7 +7,7 @@
  * Plugin Name: Reading Time WP
  * Plugin URI: https://jasonyingling.me/reading-time-wp/
  * Description: Add an estimated reading time to your posts.
- * Version: 1.2.3
+ * Version: 2.0.1
  * Author: Jason Yingling
  * Author URI: https://jasonyingling.me
  * License: GPL2
@@ -203,7 +203,7 @@ class Reading_Time_WP {
 		if ( $this->reading_time > 1 ) {
 			$calculated_postfix = $atts['postfix'];
 		} else {
-			$calculated_postfix = $atts['$postfix_singular'];
+			$calculated_postfix = $atts['postfix_singular'];
 		}
 
 		return '<span class="span-reading-time rt-reading-time"><span class="rt-label">' . $atts['label'] . '</span> <span class="rt-time"> ' . $this->reading_time . '</span> <span class="rt-label rt-postfix">' . $calculated_postfix . '</span></span>';

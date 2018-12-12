@@ -1,10 +1,10 @@
 === Reading Time WP ===
 Contributors: yingling017
-Donate link: http://jasonyingling.me
+Donate link: https://jasonyingling.me/donations/buy-me-a-coffee/
 Tags: reading time, estimated time, word count, time, posts, page, reading
 Requires at least: 3.0.1
-Tested up to: 4.9.8
-Stable tag: 1.2.3
+Tested up to: 5.0
+Stable tag: 2.0.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -70,9 +70,13 @@ Just hook into the `rtwp_filter_wordcount` filter and increment the word count t
 
 == Changelog ==
 
-= 1.2.3 = 
+= 2.0.1 =
+* Fixing error with Reading Time shortcode when using postfix_singular attribute
+
+= 2.0.0 = 
+* Updating plugin to better meet WordPress Coding Standards. This includes renaming variables throughout the plugin.
+* Note: If you've hooked into Reading Time WP's class, variables, or functions this update could cause issues.
 * Fixing HTML output when using shortcode to match auto inserted reading times
-* Updating plugin to better meet WordPress Coding Standards
 
 = 1.2.2 =
 * Switched default for all post types to display reading time if option has not been set
