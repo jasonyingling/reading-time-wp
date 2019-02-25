@@ -13,7 +13,7 @@ $rtwp_post_type_args = array(
 
 $rtwp_post_type_args = apply_filters( 'rtwp_post_type_args', $rtwp_post_type_args );
 
-$rtwp_post_types = get_post_types( $rtwp_post_type_args );
+$rtwp_post_types = get_post_types( $rtwp_post_type_args, 'object' );
 
 if ( isset( $_POST['rt_reading_time_hidden'] ) && 'Y' == $_POST['rt_reading_time_hidden'] ) {
 	// Check the nonce for the Reading Time.
@@ -90,7 +90,7 @@ if ( isset( $_POST['rt_reading_time_hidden'] ) && 'Y' == $_POST['rt_reading_time
 		$reading_time_post_types = array();
 
 		foreach ( $rtwp_post_types as $post_type_option ) {
-			if ( 'attachment' === $post_type_option ) {
+			if ( 'attachment' === $post_type_option->name ) {
 				continue;
 			}
 			$reading_time_post_types[ $post_type_option ] = true;
@@ -127,7 +127,7 @@ if ( isset( $_POST['rt_reading_time_hidden'] ) && 'Y' == $_POST['rt_reading_time
 		<h3><?php esc_html_e( 'Select Post Types to Display Reading Time On', 'reading-time-wp' ); ?></h3>
 
 		<?php foreach ( $rtwp_post_types as $rtwp_post_type ) : ?>
-			<p><?php echo esc_html( 'Display on ', 'reading-time-wp' ) . esc_html( $rtwp_post_type ) . ': '; ?><input type="checkbox" name="rt_reading_time_post_types[<?php echo esc_attr( $rtwp_post_type ); ?>]" <?php if ( isset( $reading_time_post_types[ $rtwp_post_type ] ) && $reading_time_post_types[ $rtwp_post_type ] === true) { echo 'checked'; } ?> size="20"></p>
+			<p><?php echo esc_html__( 'Display on ', 'reading-time-wp' ) . esc_html( $rtwp_post_type->label ) . ': '; ?><input type="checkbox" name="rt_reading_time_post_types[<?php echo esc_attr( $rtwp_post_type->name ); ?>]" <?php if ( isset( $reading_time_post_types[ $rtwp_post_type->name ] ) && $reading_time_post_types[ $rtwp_post_type->name ] === true) { echo 'checked'; } ?> size="20"></p>
 		<?php endforeach; ?>
 
 		<p class="submit">
