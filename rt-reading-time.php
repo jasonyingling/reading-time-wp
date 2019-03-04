@@ -108,7 +108,7 @@ class Reading_Time_WP {
 	 * Calculate the reading time of a post.
 	 *
 	 * Gets the post content, counts the images, strips shortcodes, and strips tags.
-	 * Then counds the words. Converts images into a word count. And outputs the
+	 * Then counts the words. Converts images into a word count. And outputs the
 	 * total reading time.
 	 *
 	 * @since 1.0.0
@@ -241,7 +241,7 @@ class Reading_Time_WP {
 	/**
 	 * Adds the reading time before the_content.
 	 *
-	 * If the options is selected to automatically add the reading time before
+	 * If the options are selected to automatically add the reading time before
 	 * the_content, the reading time is calculated and added to the beginning of the_content.
 	 *
 	 * @since 1.0.0
