@@ -215,7 +215,7 @@ class Reading_Time_WP {
 	 * Include the Reading Time Admin page.
 	 *
 	 * The reading-time-admin.php contains everything needed to handle
-	 * the optoins in the admin screen.
+	 * the options in the admin screen.
 	 *
 	 * @since 1.0.0
 	 */
