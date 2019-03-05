@@ -93,7 +93,7 @@ if ( isset( $_POST['rt_reading_time_hidden'] ) && 'Y' == $_POST['rt_reading_time
 			if ( 'attachment' === $post_type_option->name ) {
 				continue;
 			}
-			$reading_time_post_types[ $post_type_option ] = true;
+			$reading_time_post_types[ $post_type_option->name ] = true;
 		}
 	}
 	if ( isset( $rt_reading_time_options['include_shortcodes'] ) ) {

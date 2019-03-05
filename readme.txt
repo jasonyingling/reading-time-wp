@@ -4,7 +4,7 @@ Donate link: https://jasonyingling.me/donations/buy-me-a-coffee/
 Tags: reading time, estimated time, word count, time, posts, page, reading
 Requires at least: 3.0.1
 Tested up to: 5.1
-Stable tag: 2.0.3
+Stable tag: 2.0.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -69,6 +69,9 @@ Just hook into the `rtwp_filter_wordcount` filter and increment the word count t
 2. The options available in Reading Time WP.
 
 == Changelog ==
+
+= 2.0.4 =
+* Fixing a PHP Warning for users that installed priort to version 1.2.0 and hadn't updated the settings page since.
 
 = 2.0.3 =
 * Adjusting how post types are output on admin page for better translations
