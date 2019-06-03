@@ -63,6 +63,11 @@ Drop the code from this Gist in your functions.php https://gist.github.com/yingl
 
 Just hook into the `rtwp_filter_wordcount` filter and increment the word count the reading time is based on.
 
+= How do I specify a different post ID in the shortcode, e.g. to show each post's reading time on a page that lists many posts? =
+
+Use the optional page_id attribute on the shortcode. e.g. [rt_reading_time label="Reading Time:" postfix="minutes" postfix_singular="minute" post_id="123"]
+
+
 == Screenshots ==
 
 1. An example of an estimated reading time entered before "the_content".
@@ -85,7 +90,7 @@ Just hook into the `rtwp_filter_wordcount` filter and increment the word count t
 = 2.0.1 =
 * Fixing error with Reading Time shortcode when using postfix_singular attribute
 
-= 2.0.0 = 
+= 2.0.0 =
 * Updating plugin to better meet WordPress Coding Standards. This includes renaming variables throughout the plugin.
 * Note: If you've hooked into Reading Time WP's class, variables, or functions this update could cause issues.
 * Fixing HTML output when using shortcode to match auto inserted reading times
