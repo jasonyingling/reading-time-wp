@@ -139,5 +139,6 @@ if ( isset( $_POST['rt_reading_time_hidden'] ) && 'Y' == $_POST['rt_reading_time
 		<p><?php echo wp_kses_post( __( 'Shortcode: <code>[rt_reading_time label="Reading Time:" postfix="minutes" postfix_singular="minute"]</code>', 'reading-time-wp' ) ); ?></p>
 		<p><?php echo wp_kses_post( __( 'Or simply use <code>[rt_reading_time]</code> to return the number with no labels.', 'reading-time-wp' ) ); ?></p>
 		<p><?php echo wp_kses_post( __( 'Want to insert the reading time into your theme? Use <code>do_shortcode(\'[rt_reading_time]\')</code>.', 'reading-time-wp' ) ); ?></p>
+		<p><?php echo wp_kses_post( __( 'The shortcode shows the reading time for the current page/post by default. To show the reading time for another one, use the optional "post_id" attribute. For example - to show the reading time for post ID 123: <code>[rt_reading_time post_id="123"]</code>.', 'reading-time-wp' ) ); ?></p>
 	</div>
 </div>

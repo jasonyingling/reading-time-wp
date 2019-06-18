@@ -191,6 +191,7 @@ class Reading_Time_WP {
 				'label'            => '',
 				'postfix'          => '',
 				'postfix_singular' => '',
+				'post_id' => '',
 			),
 			$atts,
 			'rt_reading_time'
@@ -198,7 +199,8 @@ class Reading_Time_WP {
 
 		$rt_reading_time_options = get_option( 'rt_reading_time_options' );
 
-		$rt_post = get_the_ID();
+		// If post_id attribute was specified that exists, then use that to calculate read time, else use the current post ID
+		$rt_post = $atts['post_id'] && ( get_post_status($atts['post_id']) ) ? $atts['post_id'] : get_the_ID();
 
 		$this->rt_calculate_reading_time( $rt_post, $rt_reading_time_options );
 
