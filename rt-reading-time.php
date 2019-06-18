@@ -241,7 +241,7 @@ class Reading_Time_WP {
 	/**
 	 * Adds the reading time before the_content.
 	 *
-	 * If the options are selected to automatically add the reading time before
+	 * If the option is selected to automatically add the reading time before
 	 * the_content, the reading time is calculated and added to the beginning of the_content.
 	 *
 	 * @since 1.0.0
