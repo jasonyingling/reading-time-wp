@@ -7,7 +7,7 @@
  * Plugin Name: Reading Time WP
  * Plugin URI: https://jasonyingling.me/reading-time-wp/
  * Description: Add an estimated reading time to your posts.
- * Version: 2.0.4
+ * Version: 2.0.5
  * Author: Jason Yingling
  * Author URI: https://jasonyingling.me
  * License: GPL2
@@ -174,9 +174,30 @@ class Reading_Time_WP {
 	}
 
 	/**
-	 * Creates the [rt_reading_time] shortcode.
+	 * Output the proper postfix for the reading time.
 	 *
-	 * Description.
+	 * @since 2.0.5
+	 *
+	 * @param string|int $time The total reading time for the article or string if it's 0.
+	 * @param string     $singular The postfix singular label.
+	 * @param string     $multiple The postfix label.
+	 *
+	 * @return string $postfix The calculated postfix.
+	 */
+	public function rt_add_postfix( $time, $singular, $multiple ) {
+		if ( $time > 1 ) {
+			$postfix = $multiple;
+		} else {
+			$postfix = $singular;
+		}
+
+		$postfix = apply_filters( 'rt_edit_postfix', $postfix, $time, $singular, $multiple );
+
+		return $postfix;
+	}
+
+	/**
+	 * Creates the [rt_reading_time] shortcode.
 	 *
 	 * @since 1.0.0
 	 *
@@ -199,16 +220,12 @@ class Reading_Time_WP {
 
 		$rt_reading_time_options = get_option( 'rt_reading_time_options' );
 
-		// If post_id attribute was specified that exists, then use that to calculate read time, else use the current post ID
+		// If post_id attribute was specified that exists, then use that to calculate read time, else use the current post ID.
 		$rt_post = $atts['post_id'] && ( get_post_status( $atts['post_id'] ) ) ? $atts['post_id'] : get_the_ID();
 
 		$this->rt_calculate_reading_time( $rt_post, $rt_reading_time_options );
 
-		if ( $this->reading_time > 1 ) {
-			$calculated_postfix = $atts['postfix'];
-		} else {
-			$calculated_postfix = $atts['postfix_singular'];
-		}
+		$calculated_postfix = $this->rt_add_postfix( $this->reading_time, $atts['postfix_singular'], $atts['postfix'] );
 
 		return '<span class="span-reading-time rt-reading-time"><span class="rt-label">' . $atts['label'] . '</span> <span class="rt-time"> ' . $this->reading_time . '</span> <span class="rt-label rt-postfix">' . $calculated_postfix . '</span></span>';
 	}
@@ -275,11 +292,7 @@ class Reading_Time_WP {
 			return $content;
 		}
 
-		if ( $this->reading_time > 1 ) {
-			$calculated_postfix = $postfix;
-		} else {
-			$calculated_postfix = $postfix_singular;
-		}
+		$calculated_postfix = $this->rt_add_postfix( $this->reading_time, $postfix_singular, $postfix );
 
 		$content  = '<span class="rt-reading-time" style="display: block;"><span class="rt-label">' . $label . '</span> <span class="rt-time">' . $this->reading_time . '</span> <span class="rt-label rt-postfix">' . $calculated_postfix . '</span></span>';
 		$content .= $original_content;
@@ -317,11 +330,7 @@ class Reading_Time_WP {
 		$postfix          = $rt_reading_time_options['postfix'];
 		$postfix_singular = $rt_reading_time_options['postfix_singular'];
 
-		if ( $this->reading_time > 1 ) {
-			$calculated_postfix = $postfix;
-		} else {
-			$calculated_postfix = $postfix_singular;
-		}
+		$calculated_postfix = $this->rt_add_postfix( $this->reading_time, $postfix_singular, $postfix );
 
 		$content  = '<span class="rt-reading-time" style="display: block;"><span class="rt-label">' . $label . '</span> <span class="rt-time">' . $this->reading_time . '</span> <span class="rt-label rt-postfix">' . $calculated_postfix . '</span></span> ';
 		$content .= $original_content;

@@ -3,8 +3,8 @@ Contributors: yingling017, jvarn13, bonaparte
 Donate link: https://jasonyingling.me/donations/buy-me-a-coffee/
 Tags: reading time, estimated time, word count, time, posts, page, reading
 Requires at least: 3.0.1
-Tested up to: 5.1
-Stable tag: 2.0.4
+Tested up to: 5.2.1
+Stable tag: 2.0.5
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -75,6 +75,12 @@ Use the optional page_id attribute on the shortcode. e.g. [rt_reading_time label
 
 == Changelog ==
 
+= 2.0.5 =
+* Adding a post_id attribute to the shortcode
+* Adding `rt_add_postfix` function for outputting the postfix
+* Adding `rt_edit_postfix` filter for editing output postfix
+* Grammar edits.
+
 = 2.0.4 =
 * Fixing a PHP Warning for users that installed priort to version 1.2.0 and hadn't updated the settings page since.
 
@@ -142,49 +148,3 @@ Use the optional page_id attribute on the shortcode. e.g. [rt_reading_time label
 
 = 1.0.0 =
 * Initial release
-
-== Upgrade Notice ==
-
-= 1.0 =
-Initial release
-
-= 1.0.1 =
-This update converts the plugin into a class based structure for better expandability in the future.
-
-= 1.0.2 =
-Fixes issue with miscalculated reading time when using <!--more--> tags
-
-= 1.0.3 =
-Fixes issue with reading time appearing inline when using the_excerpt.
-
-= 1.0.4 =
-Updating stable version and readme files
-
-= 1.0.5 =
-Plugin tested for WordPress 4.1
-
-= 1.0.6 =
-Updated the way the word count is calculated to be more accurate when using images and links
-
-= 1.0.7 =
-Switched to using span elements instead of divs for inserting before content and excerpt
-
-= 1.0.8 =
-Added in singular postfix setting. Added in separate control to display reading time on excerpts.
-
-= 1.0.9 =
-Fixed typo in shortcode and implemented better sanitization from github
-
-= 1.0.10 =
-Tested in WordPress 4.9
-
-= 1.1.0 =
-Added images into reading time calculations based on Medium's suggestion. https://blog.medium.com/read-time-and-you-bc2048ab620c
-
-= 1.2.0 =
-* Hoo boy do we have a big one.
-* Allowed for filtering of the `$shortcode_atts`.
-* Added the much requested ability to control which post types reading times display on.
-* Added a filter for adding to the word count the reading time is based on.
-* Added in an actual text-domain and translation functions and generated a .pot file.
-* Cleaned up a bit for better coding standards.
