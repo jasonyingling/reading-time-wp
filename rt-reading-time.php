@@ -7,14 +7,14 @@
  * Plugin Name: Reading Time WP
  * Plugin URI: https://jasonyingling.me/reading-time-wp/
  * Description: Add an estimated reading time to your posts.
- * Version: 2.0.5
+ * Version: 2.0.6
  * Author: Jason Yingling
  * Author URI: https://jasonyingling.me
  * License: GPL2
  * Text Domain: reading-time-wp
  * Domain Path: /languages
  *
- * Copyright 2018  Jason Yingling  (email : yingling017@gmail.com)
+ * Copyright 2019  Jason Yingling  (email : yingling017@gmail.com)
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License, version 2, as
@@ -67,8 +67,8 @@ class Reading_Time_WP {
 			'postfix'            => __( 'minutes', 'reading-time-wp' ),
 			'postfix_singular'   => __( 'minute', 'reading-time-wp' ),
 			'wpm'                => 300,
-			'before_content'     => 'true',
-			'before_excerpt'     => 'true',
+			'before_content'     => true,
+			'before_excerpt'     => true,
 			'exclude_images'     => false,
 			'include_shortcodes' => false,
 		);
@@ -94,11 +94,11 @@ class Reading_Time_WP {
 		add_option( 'rt_reading_time_options', $default_settings );
 		add_action( 'admin_menu', array( $this, 'rt_reading_time_admin_actions' ) );
 
-		if ( isset( $rt_reading_time_options['before_content'] ) && 'true' === $rt_reading_time_options['before_content'] ) {
+		if ( isset( $rt_reading_time_options['before_content'] ) && true == $rt_reading_time_options['before_content'] ) {
 			add_filter( 'the_content', array( $this, 'rt_add_reading_time_before_content' ) );
 		}
 
-		if ( isset( $rt_reading_time_options['before_excerpt'] ) && 'true' === $rt_reading_time_options['before_excerpt'] ) {
+		if ( isset( $rt_reading_time_options['before_excerpt'] ) && true == $rt_reading_time_options['before_excerpt'] ) {
 			add_filter( 'get_the_excerpt', array( $this, 'rt_add_reading_time_before_excerpt' ), 1000 );
 		}
 
@@ -214,7 +214,7 @@ class Reading_Time_WP {
 				'label'            => '',
 				'postfix'          => '',
 				'postfix_singular' => '',
-				'post_id' => '',
+				'post_id'          => '',
 			),
 			$atts,
 			'rt_reading_time'
@@ -229,7 +229,7 @@ class Reading_Time_WP {
 
 		$calculated_postfix = $this->rt_add_postfix( $this->reading_time, $atts['postfix_singular'], $atts['postfix'] );
 
-		return '<span class="span-reading-time rt-reading-time"><span class="rt-label">' . $atts['label'] . '</span> <span class="rt-time"> ' . $this->reading_time . '</span> <span class="rt-label rt-postfix">' . $calculated_postfix . '</span></span>';
+		return '<span class="span-reading-time rt-reading-time"><span class="rt-label">' . esc_html( $atts['label'] ) . '</span> <span class="rt-time"> ' . esc_html( $this->reading_time ) . '</span> <span class="rt-label rt-postfix">' . esc_html( $calculated_postfix ) . '</span></span>';
 	}
 
 	/**
@@ -296,7 +296,7 @@ class Reading_Time_WP {
 
 		$calculated_postfix = $this->rt_add_postfix( $this->reading_time, $postfix_singular, $postfix );
 
-		$content  = '<span class="rt-reading-time" style="display: block;"><span class="rt-label">' . $label . '</span> <span class="rt-time">' . $this->reading_time . '</span> <span class="rt-label rt-postfix">' . $calculated_postfix . '</span></span>';
+		$content  = '<span class="rt-reading-time" style="display: block;"><span class="rt-label">' . esc_html( $label ) . '</span> <span class="rt-time">' . esc_html( $this->reading_time ) . '</span> <span class="rt-label rt-postfix">' . esc_html( $calculated_postfix ) . '</span></span>';
 		$content .= $original_content;
 		return $content;
 	}
@@ -334,7 +334,7 @@ class Reading_Time_WP {
 
 		$calculated_postfix = $this->rt_add_postfix( $this->reading_time, $postfix_singular, $postfix );
 
-		$content  = '<span class="rt-reading-time" style="display: block;"><span class="rt-label">' . $label . '</span> <span class="rt-time">' . $this->reading_time . '</span> <span class="rt-label rt-postfix">' . $calculated_postfix . '</span></span> ';
+		$content  = '<span class="rt-reading-time" style="display: block;"><span class="rt-label">' . esc_html( $label ) . '</span> <span class="rt-time">' . esc_html( $this->reading_time ) . '</span> <span class="rt-label rt-postfix">' . esc_html( $calculated_postfix ) . '</span></span> ';
 		$content .= $original_content;
 		return $content;
 	}
