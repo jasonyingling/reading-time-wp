@@ -137,11 +137,13 @@ class Reading_Time_WP {
 
 		$word_count = apply_filters( 'rtwp_filter_wordcount', $word_count );
 
-		$this->reading_time = ceil( $word_count / $rt_options['wpm'] );
+		$this->reading_time = $word_count / $rt_options['wpm'];
 
 		// If the reading time is 0 then return it as < 1 instead of 0.
 		if ( 1 > $this->reading_time ) {
 			$this->reading_time = __( '< 1', 'reading-time-wp' );
+		} else {
+			$this->reading_time = ceil( $this->reading_time );
 		}
 
 		return $this->reading_time;
