@@ -38,7 +38,7 @@ if ( isset( $_POST['rt_reading_time_hidden'] ) && check_admin_referer( 'reading_
 		'label'              => $reading_time_label,
 		'postfix'            => $reading_time_postfix,
 		'postfix_singular'   => $reading_time_postfix_singular,
-		'wpm'                => $reading_time_wpm,
+		'wpm'                => (float) $reading_time_wpm,
 		'before_content'     => $reading_time_check,
 		'before_excerpt'     => $reading_time_check_excerpt,
 		'exclude_images'     => $reading_time_exclude_images,
@@ -95,7 +95,7 @@ if ( isset( $_POST['rt_reading_time_hidden'] ) && check_admin_referer( 'reading_
 		<p><?php esc_html_e( 'Reading time postfix: ', 'reading-time-wp' ); ?><input type="text" name="rt_reading_time_postfix" value="<?php echo esc_attr( $reading_time_postfix ); ?>" size="20"><?php esc_html_e( ' This value appears after the reading time. Leave blank for none.', 'reading-time-wp' ); ?></p>
 		<p><?php esc_html_e( 'Reading time postfix singular: ', 'reading-time-wp' ); ?><input type="text" name="rt_reading_time_postfix_singular" value="<?php echo esc_attr( $reading_time_postfix_singular ); ?>" size="20"><?php esc_html_e( ' This value appears after the reading time, when lecture time is 1 minute.', 'reading-time-wp' ); ?></p>
 
-		<p><?php esc_html_e( 'Words per minute: ', 'reading-time-wp' ); ?><input type="text" name="rt_reading_time_wpm" value="<?php echo esc_attr( $reading_time_wpm ); ?>" size="20"><?php esc_html_e( ' (defaults to 300, the average reading speed for adults)', 'reading-time-wp' ); ?></p>
+		<p><?php esc_html_e( 'Words per minute: ', 'reading-time-wp' ); ?><input type="number" name="rt_reading_time_wpm" value="<?php echo esc_attr( (float) $reading_time_wpm ); ?>" size="20"><?php esc_html_e( ' (defaults to 300, the average reading speed for adults)', 'reading-time-wp' ); ?></p>
 
 		<p><?php esc_html_e( 'Insert Reading Time before content: ', 'reading-time-wp' ); ?><input type="checkbox" name="rt_reading_time_check" <?php echo ( true == $reading_time_check ) ? 'checked' : ''; ?> size="20"></p>
 		<p><?php esc_html_e( 'Insert Reading Time before excerpt: ', 'reading-time-wp' ); ?><input type="checkbox" name="rt_reading_time_check_excerpt" <?php echo ( true == $reading_time_check_excerpt ) ? 'checked' : ''; ?> size="20"></p>
