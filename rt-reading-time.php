@@ -349,11 +349,11 @@ class Reading_Time_WP {
 	 * @param string $string A string set to either 'true' or 'false'.
 	 */
 	public function rt_convert_boolean( $string ) {
-		if ( 'true' === $string ) {
+		if ( 'true' === $string || ( true === $string ) ) {
 			echo '<pre>true'; print_r($string); echo '</pre>';
 			return true;
 		} else {
-			echo '<pre>false'; print_r($false); echo '</pre>';
+			echo '<pre>false'; print_r($string); echo '</pre>';
 			return false;
 		}
 	}
