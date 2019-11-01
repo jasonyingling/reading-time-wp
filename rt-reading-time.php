@@ -94,11 +94,15 @@ class Reading_Time_WP {
 		add_option( 'rt_reading_time_options', $default_settings );
 		add_action( 'admin_menu', array( $this, 'rt_reading_time_admin_actions' ) );
 
-		if ( isset( $rt_reading_time_options['before_content'] ) && true == $rt_reading_time_options['before_content'] ) {
+		$rt_before_content = $this->rt_convert_boolean( $rt_reading_time_options['before_content'] );
+
+		if ( isset( $rt_before_content ) && true === $rt_before_content ) {
 			add_filter( 'the_content', array( $this, 'rt_add_reading_time_before_content' ) );
 		}
 
-		if ( isset( $rt_reading_time_options['before_excerpt'] ) && true == $rt_reading_time_options['before_excerpt'] ) {
+		$rt_after_content = $this->rt_convert_boolean( $rt_reading_time_options['before_excerpt'] );
+
+		if ( isset( $rt_after_content ) && true === $rt_after_content ) {
 			add_filter( 'get_the_excerpt', array( $this, 'rt_add_reading_time_before_excerpt' ), 1000 );
 		}
 
@@ -337,6 +341,19 @@ class Reading_Time_WP {
 		$content  = '<span class="rt-reading-time" style="display: block;"><span class="rt-label">' . esc_html( $label ) . '</span> <span class="rt-time">' . esc_html( $this->reading_time ) . '</span> <span class="rt-label rt-postfix">' . esc_html( $calculated_postfix ) . '</span></span> ';
 		$content .= $original_content;
 		return $content;
+	}
+
+	/**
+	 * A function to fix some bad legacy code using a string for true and false.
+	 *
+	 * @param string $string A string set to either 'true' or 'false'.
+	 */
+	public function rt_convert_boolean( $string ) {
+		if ( 'true' === $string ) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 }

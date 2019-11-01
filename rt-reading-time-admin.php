@@ -57,9 +57,9 @@ if ( isset( $_POST['rt_reading_time_hidden'] ) && check_admin_referer( 'reading_
 	$reading_time_postfix          = esc_html( $rt_reading_time_options['postfix'] );
 	$reading_time_postfix_singular = esc_html( $rt_reading_time_options['postfix_singular'] );
 	$reading_time_wpm              = esc_html( $rt_reading_time_options['wpm'] );
-	$reading_time_check            = esc_html( $rt_reading_time_options['before_content'] );
-	$reading_time_check_excerpt    = esc_html( $rt_reading_time_options['before_excerpt'] );
-	$reading_time_exclude_images   = esc_html( $rt_reading_time_options['exclude_images'] );
+	$reading_time_check            = $this->rt_convert_boolean( $rt_reading_time_options['before_content'] );
+	$reading_time_check_excerpt    = $this->rt_convert_boolean( $rt_reading_time_options['before_excerpt'] );
+	$reading_time_exclude_images   = $rt_reading_time_options['exclude_images'];
 
 	if ( isset( $rt_reading_time_options['post_types'] ) ) {
 		$reading_time_post_types = $rt_reading_time_options['post_types'];
