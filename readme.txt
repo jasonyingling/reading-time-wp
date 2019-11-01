@@ -75,6 +75,10 @@ Use the optional page_id attribute on the shortcode. e.g. [rt_reading_time label
 
 == Changelog ==
 
+= 2.0.8 =
+* Improving conditional logic checks
+* Fixing a bug where post types would show as checked on refresh if all post types were unchecked
+
 = 2.0.7 =
 * Switching words per minute to use number input for better validation
 
