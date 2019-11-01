@@ -63,10 +63,9 @@ if ( isset( $_POST['rt_reading_time_hidden'] ) && check_admin_referer( 'reading_
 
 	if ( isset( $rt_reading_time_options['post_types'] ) ) {
 		$reading_time_post_types = $rt_reading_time_options['post_types'];
-	} elseif ( $rt_reading_time_options['post_types'] === NULL ) {
+	} elseif ( NULL === $rt_reading_time_options['post_types'] ) {
 		$reading_time_post_types = array();
 	} else {
-		echo '<pre>'; print_r('butt why?'); echo '</pre>';
 		// set defaults that have always been there for backwards compat until users set their own.
 		$reading_time_post_types = array();
 

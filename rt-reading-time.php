@@ -7,7 +7,7 @@
  * Plugin Name: Reading Time WP
  * Plugin URI: https://jasonyingling.me/reading-time-wp/
  * Description: Add an estimated reading time to your posts.
- * Version: 2.0.7
+ * Version: 2.0.8
  * Author: Jason Yingling
  * Author URI: https://jasonyingling.me
  * License: GPL2
@@ -280,8 +280,12 @@ class Reading_Time_WP {
 		// Get the post type of the current post.
 		$rtwp_current_post_type = get_post_type();
 
+		if ( ! isset( $rt_reading_time_options['post_types'] ) ) {
+			$rt_reading_time_options['post_types'] = array();
+		}
+
 		// If the current post type isn't included in the array of post types or it is and set to false, don't display it.
-		if ( isset( $rt_reading_time_options['post_types'] ) && ( ! isset( $rt_reading_time_options['post_types'][ $rtwp_current_post_type ] ) || ! $rt_reading_time_options['post_types'][ $rtwp_current_post_type ] ) ) {
+		if ( ! isset( $rt_reading_time_options['post_types'][ $rtwp_current_post_type ] ) || ! $rt_reading_time_options['post_types'][ $rtwp_current_post_type ] ) {
 			return $content;
 		}
 
@@ -322,6 +326,10 @@ class Reading_Time_WP {
 		// Get the post type of the current post.
 		$rtwp_current_post_type = get_post_type();
 
+		if ( ! isset( $rt_reading_time_options['post_types'] ) ) {
+			$rt_reading_time_options['post_types'] = array();
+		}
+
 		// If the current post type isn't included in the array of post types or it is and set to false, don't display it.
 		if ( ! isset( $rt_reading_time_options['post_types'][ $rtwp_current_post_type ] ) || ! $rt_reading_time_options['post_types'][ $rtwp_current_post_type ] ) {
 			return $content;
@@ -346,14 +354,12 @@ class Reading_Time_WP {
 	/**
 	 * A function to fix some bad legacy code using a string for true and false.
 	 *
-	 * @param string $string A string set to either 'true' or 'false'.
+	 * @param string $value A string set to either 'true' or 'false'.
 	 */
-	public function rt_convert_boolean( $string ) {
-		if ( 'true' === $string || ( true === $string ) ) {
-			echo '<pre>true'; print_r($string); echo '</pre>';
+	public function rt_convert_boolean( $value ) {
+		if ( 'true' === $value || true === $value ) {
 			return true;
 		} else {
-			echo '<pre>false'; print_r($string); echo '</pre>';
 			return false;
 		}
 	}
