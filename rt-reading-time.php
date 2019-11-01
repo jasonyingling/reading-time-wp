@@ -350,8 +350,10 @@ class Reading_Time_WP {
 	 */
 	public function rt_convert_boolean( $string ) {
 		if ( 'true' === $string ) {
+			echo '<pre>true'; print_r($string); echo '</pre>';
 			return true;
 		} else {
+			echo '<pre>false'; print_r($false); echo '</pre>';
 			return false;
 		}
 	}
