@@ -7,7 +7,7 @@
  * Plugin Name: Reading Time WP
  * Plugin URI: https://jasonyingling.me/reading-time-wp/
  * Description: Add an estimated reading time to your posts.
- * Version: 2.0.8
+ * Version: 2.0.9
  * Author: Jason Yingling
  * Author URI: https://jasonyingling.me
  * License: GPL2
@@ -50,6 +50,18 @@ class Reading_Time_WP {
 	 * @var string
 	 */
 	public $reading_time;
+
+	/**
+	 * Allowed HTML tags for setting fields.
+	 *
+	 * @var array
+	 */
+	public $rtwp_kses = array(
+		'br'     => array(),
+		'em'     => array(),
+		'b'      => array(),
+		'strong' => array(),
+	);
 
 	/**
 	 * Construct function for Reading Time WP.
@@ -233,7 +245,7 @@ class Reading_Time_WP {
 
 		$calculated_postfix = $this->rt_add_postfix( $this->reading_time, $atts['postfix_singular'], $atts['postfix'] );
 
-		return '<span class="span-reading-time rt-reading-time"><span class="rt-label">' . esc_html( $atts['label'] ) . '</span> <span class="rt-time"> ' . esc_html( $this->reading_time ) . '</span> <span class="rt-label rt-postfix">' . esc_html( $calculated_postfix ) . '</span></span>';
+		return '<span class="span-reading-time rt-reading-time"><span class="rt-label rt-prefix">' . wp_kses( $atts['label'], $this->rtwp_kses ) . '</span> <span class="rt-time"> ' . esc_html( $this->reading_time ) . '</span> <span class="rt-label rt-postfix">' . wp_kses( $calculated_postfix, $this->rtwp_kses ) . '</span></span>';
 	}
 
 	/**
@@ -304,7 +316,7 @@ class Reading_Time_WP {
 
 		$calculated_postfix = $this->rt_add_postfix( $this->reading_time, $postfix_singular, $postfix );
 
-		$content  = '<span class="rt-reading-time" style="display: block;"><span class="rt-label">' . esc_html( $label ) . '</span> <span class="rt-time">' . esc_html( $this->reading_time ) . '</span> <span class="rt-label rt-postfix">' . esc_html( $calculated_postfix ) . '</span></span>';
+		$content  = '<span class="rt-reading-time" style="display: block;"><span class="rt-label rt-prefix">' . wp_kses( $label, $this->rtwp_kses ) . '</span> <span class="rt-time">' . esc_html( $this->reading_time ) . '</span> <span class="rt-label rt-postfix">' . wp_kses( $calculated_postfix, $this->rtwp_kses ) . '</span></span>';
 		$content .= $original_content;
 		return $content;
 	}
@@ -346,7 +358,7 @@ class Reading_Time_WP {
 
 		$calculated_postfix = $this->rt_add_postfix( $this->reading_time, $postfix_singular, $postfix );
 
-		$content  = '<span class="rt-reading-time" style="display: block;"><span class="rt-label">' . esc_html( $label ) . '</span> <span class="rt-time">' . esc_html( $this->reading_time ) . '</span> <span class="rt-label rt-postfix">' . esc_html( $calculated_postfix ) . '</span></span> ';
+		$content  = '<span class="rt-reading-time" style="display: block;"><span class="rt-label rt-prefix">' . wp_kses( $label, $this->rtwp_kses ) . '</span> <span class="rt-time">' . esc_html( $this->reading_time ) . '</span> <span class="rt-label rt-postfix">' . wp_kses( $calculated_postfix, $this->rtwp_kses ) . '</span></span> ';
 		$content .= $original_content;
 		return $content;
 	}
