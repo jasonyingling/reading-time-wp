@@ -5,6 +5,8 @@
  * @package Reading_Time_WP
  */
 
+global $reading_time_wp;
+
 $rt_reading_time_options = get_option( 'rt_reading_time_options' );
 
 $rtwp_post_type_args = array(
@@ -17,9 +19,9 @@ $rtwp_post_types = get_post_types( $rtwp_post_type_args, 'object' );
 
 if ( isset( $_POST['rt_reading_time_hidden'] ) && check_admin_referer( 'reading_time_settings' ) && 'Y' == $_POST['rt_reading_time_hidden'] ) {
 	// Form data sent.
-	$reading_time_label            = isset( $_POST['rt_reading_time_label'] ) ? sanitize_text_field( wp_unslash( $_POST['rt_reading_time_label'] ) ) : '';
-	$reading_time_postfix          = isset( $_POST['rt_reading_time_postfix'] ) ? sanitize_text_field( wp_unslash( $_POST['rt_reading_time_postfix'] ) ) : '';
-	$reading_time_postfix_singular = isset( $_POST['rt_reading_time_postfix_singular'] ) ? sanitize_text_field( wp_unslash( $_POST['rt_reading_time_postfix_singular'] ) ) : '';
+	$reading_time_label            = isset( $_POST['rt_reading_time_label'] ) ? wp_kses( wp_unslash( $_POST['rt_reading_time_label'] ), $reading_time_wp->rtwp_kses ) : '';
+	$reading_time_postfix          = isset( $_POST['rt_reading_time_postfix'] ) ? wp_kses( wp_unslash( $_POST['rt_reading_time_postfix'] ), $reading_time_wp->rtwp_kses ) : '';
+	$reading_time_postfix_singular = isset( $_POST['rt_reading_time_postfix_singular'] ) ? wp_kses( wp_unslash( $_POST['rt_reading_time_postfix_singular'] ), $reading_time_wp->rtwp_kses ) : '';
 	$reading_time_wpm              = isset( $_POST['rt_reading_time_wpm'] ) ? sanitize_text_field( wp_unslash( $_POST['rt_reading_time_wpm'] ) ) : '';
 	$reading_time_check            = isset( $_POST['rt_reading_time_check'] ) ? true : false;
 	$reading_time_check_excerpt    = isset( $_POST['rt_reading_time_check_excerpt'] ) ? true : false;
