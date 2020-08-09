@@ -53,11 +53,11 @@ So for the first image add 12 seconds, second image add 11, ..., for image 10+ a
 
 = How can I only display reading time on single posts? =
 
-Drop the code from this Gist in your functions.php. https://gist.github.com/yingles/ad2832bc1768d1fbb63341aef072908b
+Drop the code from this Gist in your functions.php. https://gist.github.com/jasonyingling/ad2832bc1768d1fbb63341aef072908b
 
 = How do I remove the Reading Time from Yoast's meta description? =
 
-Drop the code from this Gist in your functions.php https://gist.github.com/yingles/5917dc97b302ca37abce7ceb93a7f4b8
+Drop the code from this Gist in your functions.php https://gist.github.com/jasonyingling/5917dc97b302ca37abce7ceb93a7f4b8
 
 = How can I add meta fields, say from Advanced Custom Fields, into the Reading Time WP count? =
 
