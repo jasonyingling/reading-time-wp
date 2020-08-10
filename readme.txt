@@ -3,8 +3,8 @@ Contributors: yingling017, jvarn13, bonaparte
 Donate link: https://jasonyingling.me/donations/buy-me-a-coffee/
 Tags: reading time, estimated time, word count, time, posts, page, reading
 Requires at least: 3.0.1
-Tested up to: 5.3
-Stable tag: 2.0.9
+Tested up to: 5.5
+Stable tag: 2.0.10
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -53,11 +53,11 @@ So for the first image add 12 seconds, second image add 11, ..., for image 10+ a
 
 = How can I only display reading time on single posts? =
 
-Drop the code from this Gist in your functions.php. https://gist.github.com/yingles/ad2832bc1768d1fbb63341aef072908b
+Drop the code from this Gist in your functions.php. https://gist.github.com/jasonyingling/ad2832bc1768d1fbb63341aef072908b
 
 = How do I remove the Reading Time from Yoast's meta description? =
 
-Drop the code from this Gist in your functions.php https://gist.github.com/yingles/5917dc97b302ca37abce7ceb93a7f4b8
+Drop the code from this Gist in your functions.php https://gist.github.com/jasonyingling/5917dc97b302ca37abce7ceb93a7f4b8
 
 = How can I add meta fields, say from Advanced Custom Fields, into the Reading Time WP count? =
 
@@ -74,6 +74,9 @@ Use the optional page_id attribute on the shortcode. e.g. [rt_reading_time label
 2. The options available in Reading Time WP.
 
 == Changelog ==
+
+= 2.0.10 =
+* WordPress 5.5 compatability
 
 = 2.0.8 =
 * Improving conditional logic checks
