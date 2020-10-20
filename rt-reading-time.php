@@ -138,10 +138,9 @@ class Reading_Time_WP {
 		$rt_content       = get_post_field( 'post_content', $rt_post_id );
 		$number_of_images = substr_count( strtolower( $rt_content ), '<img ' );
 
-		if ( ! isset( $rt_options['include_shortcodes'] ) ) {
+		if ( isset( $rt_options['include_shortcodes'] ) && $rt_options['include_shortcodes'] === false ) {
 			$rt_content = strip_shortcodes( $rt_content );
 		}
-
 		$rt_content = wp_strip_all_tags( do_shortcode( $rt_content ) );
 		$word_count = count( preg_split( '/\s+/', $rt_content ) );
 
