@@ -79,7 +79,7 @@ Use the optional page_id attribute on the shortcode. e.g. [rt_reading_time label
 * Now runs `do_shortcode` on the content before counting to attempt to count shortcode content better.
 This should run the shortcodes and then strip extra markup output by the shortcodes. This will have no
 effect if you don't include shortcodes in the reading time.
-*  
+* Updates include shortcode logic to actually strip shortcodes if they're not included.
 
 = 2.0.10 =
 * WordPress 5.5 compatability
