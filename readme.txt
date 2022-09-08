@@ -4,7 +4,7 @@ Donate link: https://jasonyingling.me/donations/buy-me-a-coffee/
 Tags: reading time, estimated time, word count, time, posts, page, reading
 Requires at least: 3.0.1
 Tested up to: 6.0.2
-Stable tag: 2.0.11
+Stable tag: 2.0.12
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -74,6 +74,9 @@ Use the optional page_id attribute on the shortcode. e.g. [rt_reading_time label
 2. The options available in Reading Time WP.
 
 == Changelog ==
+
+= 2.0.12 =
+* Been awhile since I deployed and missed a version number update
 
 = 2.0.11 =
 * Fixed notice if $rt_reading_time_options['post_types'] is not set
