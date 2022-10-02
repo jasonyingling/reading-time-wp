@@ -378,4 +378,14 @@ class Reading_Time_WP {
 
 }
 
-$reading_time_wp = new Reading_Time_WP();
+/**
+ * Initialize Reading Time WP.
+ *
+ * @global \Reading_Time_WP $reading_time_wp Initialized plugin object.
+ * @return void
+ */
+function rtwp_init() {
+	global $reading_time_wp;
+	$reading_time_wp = new Reading_Time_WP();
+}
+add_action( 'init', 'rtwp_init', 50 );
