@@ -2,6 +2,8 @@
 /**
  * Functions for building out the Reading Time settings page.
  *
+ * Loaded by add_options_page action wrapper in rt-reading-time.php
+ *
  * @package Reading_Time_WP
  */
 
