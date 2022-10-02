@@ -7,6 +7,11 @@
  * @package Reading_Time_WP
  */
 
+// If this file is called directly, abort.
+if ( ! defined( 'WPINC' ) ) {
+	die;
+}
+
 global $reading_time_wp;
 
 $rt_reading_time_options = get_option( 'rt_reading_time_options' );
