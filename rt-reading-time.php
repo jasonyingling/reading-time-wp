@@ -92,6 +92,7 @@ class Reading_Time_WP {
 		$rtwp_post_type_args = apply_filters( 'rtwp_post_type_args', $rtwp_post_type_args );
 
 		$rtwp_post_types = get_post_types( $rtwp_post_type_args );
+		$rtwp_post_types = apply_filters( 'rtwp_post_types', $rtwp_post_types );
 
 		foreach ( $rtwp_post_types as $rtwp_post_type ) {
 			if ( 'attachment' === $rtwp_post_type ) {
@@ -103,7 +104,7 @@ class Reading_Time_WP {
 		$rt_reading_time_options = get_option( 'rt_reading_time_options' );
 
 		add_shortcode( 'rt_reading_time', array( $this, 'rt_reading_time' ) );
-		add_option( 'rt_reading_time_options', $default_settings );
+		update_option( 'rt_reading_time_options', $default_settings );
 		add_action( 'admin_menu', array( $this, 'rt_reading_time_admin_actions' ) );
 
 		$rt_before_content = $this->rt_convert_boolean( $rt_reading_time_options['before_content'] );
