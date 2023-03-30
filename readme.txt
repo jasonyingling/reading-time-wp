@@ -75,6 +75,9 @@ Use the optional page_id attribute on the shortcode. e.g. [rt_reading_time label
 
 == Changelog ==
 
+= 2.0.14 =
+* Added 'rtwp_post_types' filter for filtering post types. Thanks @gturpin-dev
+
 = 2.0.13 =
 * Tested on WordPress 6.2
 * Bug: Fixed potential undefined index errors
