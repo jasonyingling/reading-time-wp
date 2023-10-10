@@ -382,4 +382,4 @@ function rtwp_init() {
 	global $reading_time_wp;
 	$reading_time_wp = new Reading_Time_WP();
 }
-add_action( 'init', 'rtwp_init', 50 );
+add_action( 'init', 'rtwp_init' );
