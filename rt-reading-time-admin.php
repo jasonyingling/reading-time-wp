@@ -5,6 +5,11 @@
  * @package Reading_Time_WP
  */
 
+// If this file is called directly, abort.
+if ( ! defined( 'WPINC' ) ) {
+	die;
+}
+
 global $reading_time_wp;
 
 $rt_reading_time_options = get_option( 'rt_reading_time_options' );
@@ -55,13 +60,13 @@ if ( isset( $_POST['rt_reading_time_hidden'] ) && check_admin_referer( 'reading_
 	<?php
 } else {
 	// Normal page display.
-	$reading_time_label            = esc_html( $rt_reading_time_options['label'] );
-	$reading_time_postfix          = esc_html( $rt_reading_time_options['postfix'] );
-	$reading_time_postfix_singular = esc_html( $rt_reading_time_options['postfix_singular'] );
-	$reading_time_wpm              = esc_html( $rt_reading_time_options['wpm'] );
-	$reading_time_check            = $this->rt_convert_boolean( $rt_reading_time_options['before_content'] );
-	$reading_time_check_excerpt    = $this->rt_convert_boolean( $rt_reading_time_options['before_excerpt'] );
-	$reading_time_exclude_images   = $rt_reading_time_options['exclude_images'];
+	$reading_time_label            = isset( $rt_reading_time_options['label'] ) ? esc_html( $rt_reading_time_options['label'] ) : '';
+	$reading_time_postfix          = isset( $rt_reading_time_options['postfix'] ) ? esc_html( $rt_reading_time_options['postfix'] ) : '';
+	$reading_time_postfix_singular = isset( $rt_reading_time_options['postfix_singular'] ) ? esc_html( $rt_reading_time_options['postfix_singular'] ) : '';
+	$reading_time_wpm              = isset( $rt_reading_time_options['wpm'] ) ? esc_html( $rt_reading_time_options['wpm'] ) : '';
+	$reading_time_check            = isset( $rt_reading_time_options['before_content'] ) ? $this->rt_convert_boolean( $rt_reading_time_options['before_content'] ) : false;
+	$reading_time_check_excerpt    = isset( $rt_reading_time_options['before_excerpt'] ) ? $this->rt_convert_boolean( $rt_reading_time_options['before_excerpt'] ) : false;
+	$reading_time_exclude_images   = isset( $rt_reading_time_options['exclude_images'] ) ? $rt_reading_time_options['exclude_images'] : false;
 
 	if ( isset( $rt_reading_time_options['post_types'] ) ) {
 		$reading_time_post_types = $rt_reading_time_options['post_types'];
