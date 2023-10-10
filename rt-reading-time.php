@@ -203,7 +203,7 @@ class Reading_Time_WP {
 	 * @return string $postfix The calculated postfix.
 	 */
 	public function rt_add_postfix( $time, $singular, $multiple ) {
-		if ( $time > 1 ) {
+		if ( (int) $time > 1 ) {
 			$postfix = $multiple;
 		} else {
 			$postfix = $singular;
