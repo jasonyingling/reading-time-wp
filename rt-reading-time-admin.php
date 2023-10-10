@@ -2,8 +2,15 @@
 /**
  * Functions for building out the Reading Time settings page.
  *
+ * Loaded by add_options_page action wrapper in rt-reading-time.php
+ *
  * @package Reading_Time_WP
  */
+
+// If this file is called directly, abort.
+if ( ! defined( 'WPINC' ) ) {
+	die;
+}
 
 global $reading_time_wp;
 
