@@ -246,10 +246,10 @@ class Reading_Time_WP {
 
 		$calculated_postfix = $this->rt_add_postfix( $this->reading_time, $atts['postfix_singular'], $atts['postfix'] );
 
-		$output = '<span class="span-reading-time rt-reading-time"><span class="rt-label rt-prefix">' . wp_kses( $atts['label'], $this->rtwp_kses ) . '</span> <span class="rt-time"> ' . esc_html( $this->reading_time ) . '</span> <span class="rt-label rt-postfix">' . wp_kses( $calculated_postfix, $this->rtwp_kses ) . '</span></span>';
+		$output = '<span class="span-reading-time rt-reading-time"><span class="rt-label rt-prefix">' . wp_kses( $atts['label'], $this->rtwp_kses ) . '</span> <span class="rt-time"> ' . esc_html( $reading_time ) . '</span> <span class="rt-label rt-postfix">' . wp_kses( $calculated_postfix, $this->rtwp_kses ) . '</span></span>';
 
 		 // Pass the reading time output through the rtwp_filter_reading_time_output filter before returning it
-		$output = apply_filters( 'rtwp_filter_reading_time_output', $output, $atts, $rt_post, $reading_time );
+		$output = apply_filters( 'rtwp_filter_reading_time_output', $output, $atts, $calculated_postfix, $reading_time, $rt_post );
 
 		return $output;
 	}
