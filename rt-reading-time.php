@@ -259,8 +259,11 @@ class Reading_Time_WP {
 	 * @param string $postfix The postfix for the reading time.
 	 * @return string The generated reading time output.
 	 */
-	public function rt_generate_reading_time_output( $label, $reading_time, $postfix ) {
-		$output = '<span class="span-reading-time rt-reading-time"><span class="rt-label rt-prefix">' . wp_kses( $label, $this->rtwp_kses ) . '</span> <span class="rt-time"> ' . esc_html( $reading_time ) . '</span> <span class="rt-label rt-postfix">' . wp_kses( $postfix, $this->rtwp_kses ) . '</span></span>';
+	public function rt_generate_reading_time_output( $label, $reading_time, $postfix, $style = '' ) {
+		if ( $style !== '' ) {
+			$style = ' style="display: ' . esc_attr( $style ) . ';"';
+		}
+		$output = '<span class="span-reading-time rt-reading-time"' . $style . '><span class="rt-label rt-prefix">' . wp_kses( $label, $this->rtwp_kses ) . '</span> <span class="rt-time"> ' . esc_html( $reading_time ) . '</span> <span class="rt-label rt-postfix">' . wp_kses( $postfix, $this->rtwp_kses ) . '</span></span>';
 		return apply_filters( 'rtwp_filter_reading_time_output', $output, $label, $reading_time, $postfix );
 	}
 
@@ -333,7 +336,7 @@ class Reading_Time_WP {
 
 		$calculated_postfix = $this->rt_add_postfix( $reading_time, $postfix_singular, $postfix );
 
-		$content  = $this->rt_generate_reading_time_output( $label, $reading_time, $calculated_postfix );
+		$content  = $this->rt_generate_reading_time_output( $label, $reading_time, $calculated_postfix, 'block' );
 		$content .= $original_content;
 		return $content;
 	}
@@ -376,7 +379,7 @@ class Reading_Time_WP {
 
 		$calculated_postfix = $this->rt_add_postfix( $this->reading_time, $postfix_singular, $postfix );
 
-		$content  = $this->rt_generate_reading_time_output( $label, $reading_time, $calculated_postfix );
+		$content  = $this->rt_generate_reading_time_output( $label, $reading_time, $calculated_postfix, 'block' );
 		$content .= $original_content;
 		return $content;
 	}
