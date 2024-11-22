@@ -135,7 +135,7 @@ class Reading_Time_WP {
 	 */
 	public function rt_calculate_reading_time( $rt_post_id, $rt_options ) {
 
-		$rt_content       = get_post_field( 'post_content', $rt_post_id );
+		$rt_content 	  = apply_filters( 'the_content', $content );
 		$number_of_images = substr_count( strtolower( $rt_content ), '<img ' );
 
 		if ( ! isset( $rt_options['include_shortcodes'] ) ) {
