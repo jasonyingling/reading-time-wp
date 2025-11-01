@@ -79,6 +79,7 @@ class Reading_Time_WP {
 			'postfix'            => __( 'minutes', 'reading-time-wp' ),
 			'postfix_singular'   => __( 'minute', 'reading-time-wp' ),
 			'wpm'                => 300,
+			'word_count_type'    => 'word',
 			'before_content'     => true,
 			'before_excerpt'     => true,
 			'exclude_images'     => false,
@@ -143,7 +144,17 @@ class Reading_Time_WP {
 		}
 
 		$rt_content = wp_strip_all_tags( $rt_content );
-		$word_count = count( preg_split( '/\s+/', $rt_content ) );
+		
+		// Determine calculation method - default to 'word' for backwards compatibility
+		$count_type = isset( $rt_options['word_count_type'] ) ? $rt_options['word_count_type'] : 'word';
+		
+		if ( 'character' === $count_type ) {
+			// Count characters (excluding whitespace)
+			$word_count = mb_strlen( preg_replace( '/\s+/', '', $rt_content ) );
+		} else {
+			// Count words (default behavior)
+			$word_count = count( preg_split( '/\s+/', $rt_content ) );
+		}
 
 		if ( isset( $rt_options['exclude_images'] ) && ! $rt_options['exclude_images'] ) {
 			// Calculate additional time added to post by images.
