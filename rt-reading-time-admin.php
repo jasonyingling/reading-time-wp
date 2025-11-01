@@ -110,8 +110,8 @@ if ( isset( $_POST['rt_reading_time_hidden'] ) && check_admin_referer( 'reading_
 		<p><?php esc_html_e( 'Words per minute: ', 'reading-time-wp' ); ?><input type="number" name="rt_reading_time_wpm" value="<?php echo esc_attr( (float) $reading_time_wpm ); ?>" size="20"><?php esc_html_e( ' (defaults to 300, the average reading speed for adults)', 'reading-time-wp' ); ?></p>
 
 		<p>
-			<?php esc_html_e( 'Reading time calculation method: ', 'reading-time-wp' ); ?>
-			<select name="rt_word_count_type">
+			<label for="rt_word_count_type"><?php esc_html_e( 'Reading time calculation method: ', 'reading-time-wp' ); ?></label>
+			<select name="rt_word_count_type" id="rt_word_count_type">
 				<option value="word" <?php selected( $reading_time_word_count_type, 'word' ); ?>><?php esc_html_e( 'Words per minute (default)', 'reading-time-wp' ); ?></option>
 				<option value="character" <?php selected( $reading_time_word_count_type, 'character' ); ?>><?php esc_html_e( 'Characters per minute (better for Chinese/Japanese)', 'reading-time-wp' ); ?></option>
 			</select>

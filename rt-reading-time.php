@@ -150,21 +150,21 @@ class Reading_Time_WP {
 		
 		if ( 'character' === $count_type ) {
 			// Count characters (excluding whitespace)
-			$word_count = mb_strlen( preg_replace( '/\s+/', '', $rt_content ) );
+			$text_count = mb_strlen( preg_replace( '/\s+/', '', $rt_content ) );
 		} else {
 			// Count words (default behavior)
-			$word_count = count( preg_split( '/\s+/', $rt_content ) );
+			$text_count = count( preg_split( '/\s+/', $rt_content ) );
 		}
 
 		if ( isset( $rt_options['exclude_images'] ) && ! $rt_options['exclude_images'] ) {
 			// Calculate additional time added to post by images.
 			$additional_words_for_images = $this->rt_calculate_images( $number_of_images, $rt_options['wpm'] );
-			$word_count                 += $additional_words_for_images;
+			$text_count                 += $additional_words_for_images;
 		}
 
-		$word_count = apply_filters( 'rtwp_filter_wordcount', $word_count );
+		$text_count = apply_filters( 'rtwp_filter_wordcount', $text_count );
 
-		$this->reading_time = $word_count / $rt_options['wpm'];
+		$this->reading_time = $text_count / $rt_options['wpm'];
 
 		// If the reading time is 0 then return it as < 1 instead of 0.
 		if ( 1 > $this->reading_time ) {
