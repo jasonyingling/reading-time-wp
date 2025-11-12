@@ -162,7 +162,13 @@ class Reading_Time_WP {
 		if ( isset( $rt_options['exclude_images'] ) && ! $rt_options['exclude_images'] ) {
 			// Calculate additional time added to post by images.
 			$additional_words_for_images = $this->rt_calculate_images( $number_of_images, $rt_options['wpm'] );
-			$text_count                 += $additional_words_for_images;
+			if ( 'character' === $count_type ) {
+				// Convert word-equivalent to character-equivalent using average characters per word.
+				$average_chars_per_word = 5; // You may want to make this configurable or filterable.
+				$text_count += $additional_words_for_images * $average_chars_per_word;
+			} else {
+				$text_count += $additional_words_for_images;
+			}
 		}
 
 		$text_count = apply_filters( 'rtwp_filter_wordcount', $text_count );
