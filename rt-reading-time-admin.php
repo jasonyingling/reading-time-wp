@@ -29,6 +29,10 @@ if ( isset( $_POST['rt_reading_time_hidden'] ) && check_admin_referer( 'reading_
 	$reading_time_postfix_singular = isset( $_POST['rt_reading_time_postfix_singular'] ) ? wp_kses( wp_unslash( $_POST['rt_reading_time_postfix_singular'] ), $reading_time_wp->rtwp_kses ) : '';
 	$reading_time_wpm              = isset( $_POST['rt_reading_time_wpm'] ) ? sanitize_text_field( wp_unslash( $_POST['rt_reading_time_wpm'] ) ) : '';
 	$reading_time_word_count_type  = isset( $_POST['rt_word_count_type'] ) ? sanitize_text_field( wp_unslash( $_POST['rt_word_count_type'] ) ) : 'word';
+	// Validate the value
+	if ( ! in_array( $reading_time_word_count_type, array( 'word', 'character' ), true ) ) {
+		$reading_time_word_count_type = 'word';
+	}
 	$reading_time_check            = isset( $_POST['rt_reading_time_check'] ) ? true : false;
 	$reading_time_check_excerpt    = isset( $_POST['rt_reading_time_check_excerpt'] ) ? true : false;
 	$reading_time_exclude_images   = isset( $_POST['rt_reading_time_images'] ) ? true : false;
