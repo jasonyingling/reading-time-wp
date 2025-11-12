@@ -147,7 +147,10 @@ class Reading_Time_WP {
 		
 		// Determine calculation method - default to 'word' for backwards compatibility
 		$count_type = isset( $rt_options['word_count_type'] ) ? $rt_options['word_count_type'] : 'word';
-		
+		// Validate the value
+		if ( ! in_array( $count_type, array( 'word', 'character' ), true ) ) {
+			$count_type = 'word';
+		}
 		if ( 'character' === $count_type ) {
 			// Count characters (excluding whitespace)
 			$text_count = mb_strlen( preg_replace( '/\s+/', '', $rt_content ) );
