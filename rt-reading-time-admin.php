@@ -28,6 +28,11 @@ if ( isset( $_POST['rt_reading_time_hidden'] ) && check_admin_referer( 'reading_
 	$reading_time_postfix          = isset( $_POST['rt_reading_time_postfix'] ) ? wp_kses( wp_unslash( $_POST['rt_reading_time_postfix'] ), $reading_time_wp->rtwp_kses ) : '';
 	$reading_time_postfix_singular = isset( $_POST['rt_reading_time_postfix_singular'] ) ? wp_kses( wp_unslash( $_POST['rt_reading_time_postfix_singular'] ), $reading_time_wp->rtwp_kses ) : '';
 	$reading_time_wpm              = isset( $_POST['rt_reading_time_wpm'] ) ? sanitize_text_field( wp_unslash( $_POST['rt_reading_time_wpm'] ) ) : '';
+	$reading_time_word_count_type  = isset( $_POST['rt_word_count_type'] ) ? sanitize_text_field( wp_unslash( $_POST['rt_word_count_type'] ) ) : 'word';
+	// Validate the value
+	if ( ! in_array( $reading_time_word_count_type, array( 'word', 'character' ), true ) ) {
+		$reading_time_word_count_type = 'word';
+	}
 	$reading_time_check            = isset( $_POST['rt_reading_time_check'] ) ? true : false;
 	$reading_time_check_excerpt    = isset( $_POST['rt_reading_time_check_excerpt'] ) ? true : false;
 	$reading_time_exclude_images   = isset( $_POST['rt_reading_time_images'] ) ? true : false;
@@ -46,6 +51,7 @@ if ( isset( $_POST['rt_reading_time_hidden'] ) && check_admin_referer( 'reading_
 		'postfix'            => $reading_time_postfix,
 		'postfix_singular'   => $reading_time_postfix_singular,
 		'wpm'                => (float) $reading_time_wpm,
+		'word_count_type'    => $reading_time_word_count_type,
 		'before_content'     => $reading_time_check,
 		'before_excerpt'     => $reading_time_check_excerpt,
 		'exclude_images'     => $reading_time_exclude_images,
@@ -64,6 +70,7 @@ if ( isset( $_POST['rt_reading_time_hidden'] ) && check_admin_referer( 'reading_
 	$reading_time_postfix          = isset( $rt_reading_time_options['postfix'] ) ? esc_html( $rt_reading_time_options['postfix'] ) : '';
 	$reading_time_postfix_singular = isset( $rt_reading_time_options['postfix_singular'] ) ? esc_html( $rt_reading_time_options['postfix_singular'] ) : '';
 	$reading_time_wpm              = isset( $rt_reading_time_options['wpm'] ) ? esc_html( $rt_reading_time_options['wpm'] ) : '';
+	$reading_time_word_count_type  = isset( $rt_reading_time_options['word_count_type'] ) ? esc_html( $rt_reading_time_options['word_count_type'] ) : 'word';
 	$reading_time_check            = isset( $rt_reading_time_options['before_content'] ) ? $this->rt_convert_boolean( $rt_reading_time_options['before_content'] ) : false;
 	$reading_time_check_excerpt    = isset( $rt_reading_time_options['before_excerpt'] ) ? $this->rt_convert_boolean( $rt_reading_time_options['before_excerpt'] ) : false;
 	$reading_time_exclude_images   = isset( $rt_reading_time_options['exclude_images'] ) ? $rt_reading_time_options['exclude_images'] : false;
@@ -105,6 +112,14 @@ if ( isset( $_POST['rt_reading_time_hidden'] ) && check_admin_referer( 'reading_
 		<p><?php esc_html_e( 'Reading time postfix singular: ', 'reading-time-wp' ); ?><input type="text" name="rt_reading_time_postfix_singular" value="<?php echo esc_attr( $reading_time_postfix_singular ); ?>" size="20"><?php esc_html_e( ' This value appears after the reading time, when lecture time is 1 minute.', 'reading-time-wp' ); ?></p>
 
 		<p><?php esc_html_e( 'Words per minute: ', 'reading-time-wp' ); ?><input type="number" name="rt_reading_time_wpm" value="<?php echo esc_attr( (float) $reading_time_wpm ); ?>" size="20"><?php esc_html_e( ' (defaults to 300, the average reading speed for adults)', 'reading-time-wp' ); ?></p>
+
+		<p>
+			<label for="rt_word_count_type"><?php esc_html_e( 'Reading time calculation method: ', 'reading-time-wp' ); ?></label>
+			<select name="rt_word_count_type" id="rt_word_count_type">
+				<option value="word" <?php selected( $reading_time_word_count_type, 'word' ); ?>><?php esc_html_e( 'Words per minute (default)', 'reading-time-wp' ); ?></option>
+				<option value="character" <?php selected( $reading_time_word_count_type, 'character' ); ?>><?php esc_html_e( 'Characters per minute (better for Chinese/Japanese)', 'reading-time-wp' ); ?></option>
+			</select>
+		</p>
 
 		<p><?php esc_html_e( 'Insert Reading Time before content: ', 'reading-time-wp' ); ?><input type="checkbox" name="rt_reading_time_check" <?php echo ( true == $reading_time_check ) ? 'checked' : ''; ?> size="20"></p>
 		<p><?php esc_html_e( 'Insert Reading Time before excerpt: ', 'reading-time-wp' ); ?><input type="checkbox" name="rt_reading_time_check_excerpt" <?php echo ( true == $reading_time_check_excerpt ) ? 'checked' : ''; ?> size="20"></p>

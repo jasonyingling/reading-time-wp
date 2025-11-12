@@ -79,6 +79,7 @@ class Reading_Time_WP {
 			'postfix'            => __( 'minutes', 'reading-time-wp' ),
 			'postfix_singular'   => __( 'minute', 'reading-time-wp' ),
 			'wpm'                => 300,
+			'word_count_type'    => 'word',
 			'before_content'     => true,
 			'before_excerpt'     => true,
 			'exclude_images'     => false,
@@ -143,17 +144,36 @@ class Reading_Time_WP {
 		}
 
 		$rt_content = wp_strip_all_tags( $rt_content );
-		$word_count = count( preg_split( '/\s+/', $rt_content ) );
+		
+		// Determine calculation method - default to 'word' for backwards compatibility
+		$count_type = isset( $rt_options['word_count_type'] ) ? $rt_options['word_count_type'] : 'word';
+		// Validate the value
+		if ( ! in_array( $count_type, array( 'word', 'character' ), true ) ) {
+			$count_type = 'word';
+		}
+		if ( 'character' === $count_type ) {
+			// Count characters (excluding whitespace)
+			$text_count = mb_strlen( preg_replace( '/\s+/', '', $rt_content ) );
+		} else {
+			// Count words (default behavior)
+			$text_count = count( preg_split( '/\s+/', $rt_content ) );
+		}
 
 		if ( isset( $rt_options['exclude_images'] ) && ! $rt_options['exclude_images'] ) {
 			// Calculate additional time added to post by images.
 			$additional_words_for_images = $this->rt_calculate_images( $number_of_images, $rt_options['wpm'] );
-			$word_count                 += $additional_words_for_images;
+			if ( 'character' === $count_type ) {
+				// Convert word-equivalent to character-equivalent using average characters per word.
+				$average_chars_per_word = 5; // You may want to make this configurable or filterable.
+				$text_count += $additional_words_for_images * $average_chars_per_word;
+			} else {
+				$text_count += $additional_words_for_images;
+			}
 		}
 
-		$word_count = apply_filters( 'rtwp_filter_wordcount', $word_count );
+		$text_count = apply_filters( 'rtwp_filter_wordcount', $text_count );
 
-		$this->reading_time = $word_count / $rt_options['wpm'];
+		$this->reading_time = $text_count / $rt_options['wpm'];
 
 		// If the reading time is 0 then return it as < 1 instead of 0.
 		if ( 1 > $this->reading_time ) {
