@@ -1,0 +1,28 @@
+/**
+ * Reading Time Block Styles
+ *
+ * Frontend styles for the Reading Time block.
+ *
+ * @package Reading_Time_WP
+ * @since 3.0.0
+ */
+
+.wp-block-reading-time-wp-reading-time {
+	margin: 1em 0;
+}
+
+.wp-block-reading-time-wp-reading-time .rt-label {
+	font-weight: normal;
+}
+
+.wp-block-reading-time-wp-reading-time .rt-time {
+	font-weight: bold;
+}
+
+.wp-block-reading-time-wp-reading-time .rt-prefix {
+	margin-right: 0.25em;
+}
+
+.wp-block-reading-time-wp-reading-time .rt-postfix {
+	margin-left: 0.25em;
+}

@@ -1,0 +1,14 @@
+/**
+ * Reading Time Block Editor Styles
+ *
+ * Block editor specific styles for the Reading Time block.
+ *
+ * @package Reading_Time_WP
+ * @since 3.0.0
+ */
+
+.wp-block-reading-time-wp-reading-time {
+	/* Editor-specific styles can be added here */
+	border: 1px dashed #ccc;
+	padding: 1em;
+}

@@ -7,7 +7,7 @@
  * Plugin Name: Reading Time WP
  * Plugin URI: https://jasonyingling.me/reading-time-wp/
  * Description: Add an estimated reading time to your posts.
- * Version: 2.0.17
+ * Version: 3.0.0
  * Author: Jason Yingling
  * Author URI: https://jasonyingling.me
  * License: GPL2
@@ -35,12 +35,30 @@ if ( ! defined( 'WPINC' ) ) {
 	die;
 }
 
+// Load new OOP architecture.
+require_once plugin_dir_path( __FILE__ ) . 'includes/class-plugin.php';
+
 /**
+ * Initialize the new plugin architecture.
+ *
+ * @since 3.0.0
+ */
+function rtwp_init_new() {
+	return \RTWP\Plugin::get_instance();
+}
+
+// Initialize the new plugin.
+$rtwp_plugin = rtwp_init_new();
+
+/**
+ * LEGACY CLASS - Maintained for backwards compatibility.
+ *
  * Class for calculating reading time.
  *
  * The class that contains all functions for calculating reading time.
  *
  * @since 1.0.0
+ * @deprecated 3.0.0 Use RTWP\Plugin and related classes instead.
  */
 class Reading_Time_WP {
 
@@ -404,3 +422,55 @@ function rtwp_init() {
 	$reading_time_wp = new Reading_Time_WP();
 }
 add_action( 'init', 'rtwp_init' );
+
+/**
+ * BACKWARDS COMPATIBILITY WRAPPER FUNCTIONS
+ *
+ * These functions provide backwards compatibility for themes and plugins
+ * that may be calling plugin functions directly.
+ *
+ * @since 3.0.0
+ */
+
+/**
+ * Calculate reading time for a post (wrapper function).
+ *
+ * @since 3.0.0
+ *
+ * @param int   $post_id Post ID.
+ * @param array $options Calculation options.
+ * @return int|string Reading time.
+ */
+function rt_calculate_reading_time( $post_id, $options = array() ) {
+	global $rtwp_plugin;
+	return $rtwp_plugin->calculator->calculate_reading_time( $post_id, $options );
+}
+
+/**
+ * Add postfix to reading time (wrapper function).
+ *
+ * @since 3.0.0
+ *
+ * @param string|int $time Reading time value.
+ * @param string     $singular Singular postfix.
+ * @param string     $multiple Plural postfix.
+ * @return string Postfix text.
+ */
+function rt_add_postfix( $time, $singular, $multiple ) {
+	global $rtwp_plugin;
+	return $rtwp_plugin->calculator->get_postfix( $time, $singular, $multiple );
+}
+
+/**
+ * Shortcode callback (wrapper function).
+ *
+ * @since 3.0.0
+ *
+ * @param array  $atts Shortcode attributes.
+ * @param string $content Shortcode content.
+ * @return string Shortcode output.
+ */
+function rt_reading_time( $atts, $content = null ) {
+	global $rtwp_plugin;
+	return $rtwp_plugin->shortcode->render_shortcode( $atts, $content );
+}

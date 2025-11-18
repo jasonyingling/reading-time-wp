@@ -2,6 +2,8 @@
 /**
  * Functions for building out the Reading Time settings page.
  *
+ * This file is included by the Admin class and expects certain variables to be set.
+ *
  * @package Reading_Time_WP
  */
 
@@ -10,85 +12,11 @@ if ( ! defined( 'WPINC' ) ) {
 	die;
 }
 
-global $reading_time_wp;
-
-$rt_reading_time_options = get_option( 'rt_reading_time_options' );
-
-$rtwp_post_type_args = array(
-	'public' => true,
-);
-
-$rtwp_post_type_args = apply_filters( 'rtwp_post_type_args', $rtwp_post_type_args );
-
-$rtwp_post_types = get_post_types( $rtwp_post_type_args, 'object' );
-
-if ( isset( $_POST['rt_reading_time_hidden'] ) && check_admin_referer( 'reading_time_settings' ) && 'Y' == $_POST['rt_reading_time_hidden'] ) {
-	// Form data sent.
-	$reading_time_label            = isset( $_POST['rt_reading_time_label'] ) ? wp_kses( wp_unslash( $_POST['rt_reading_time_label'] ), $reading_time_wp->rtwp_kses ) : '';
-	$reading_time_postfix          = isset( $_POST['rt_reading_time_postfix'] ) ? wp_kses( wp_unslash( $_POST['rt_reading_time_postfix'] ), $reading_time_wp->rtwp_kses ) : '';
-	$reading_time_postfix_singular = isset( $_POST['rt_reading_time_postfix_singular'] ) ? wp_kses( wp_unslash( $_POST['rt_reading_time_postfix_singular'] ), $reading_time_wp->rtwp_kses ) : '';
-	$reading_time_wpm              = isset( $_POST['rt_reading_time_wpm'] ) ? sanitize_text_field( wp_unslash( $_POST['rt_reading_time_wpm'] ) ) : '';
-	$reading_time_check            = isset( $_POST['rt_reading_time_check'] ) ? true : false;
-	$reading_time_check_excerpt    = isset( $_POST['rt_reading_time_check_excerpt'] ) ? true : false;
-	$reading_time_exclude_images   = isset( $_POST['rt_reading_time_images'] ) ? true : false;
-	$reading_time_shortcodes       = isset( $_POST['rt_reading_time_shortcodes'] ) ? true : false;
-
-	if ( isset( $_POST['rt_reading_time_post_types'] ) ) {
-		foreach ( $_POST['rt_reading_time_post_types'] as $key => $value ) {
-			if ( $value ) {
-				$reading_time_post_types[ sanitize_text_field( $key ) ] = true;
-			}
-		}
-	}
-
-	$update_options = array(
-		'label'              => $reading_time_label,
-		'postfix'            => $reading_time_postfix,
-		'postfix_singular'   => $reading_time_postfix_singular,
-		'wpm'                => (float) $reading_time_wpm,
-		'before_content'     => $reading_time_check,
-		'before_excerpt'     => $reading_time_check_excerpt,
-		'exclude_images'     => $reading_time_exclude_images,
-		'post_types'         => $reading_time_post_types,
-		'include_shortcodes' => $reading_time_shortcodes,
-	);
-
-	update_option( 'rt_reading_time_options', $update_options );
-
-	?>
-	<div class="updated"><p><strong><?php echo esc_html( __( 'Options saved.', 'reading-time-wp' ) ); ?></strong></p></div>
-	<?php
-} else {
-	// Normal page display.
-	$reading_time_label            = isset( $rt_reading_time_options['label'] ) ? esc_html( $rt_reading_time_options['label'] ) : '';
-	$reading_time_postfix          = isset( $rt_reading_time_options['postfix'] ) ? esc_html( $rt_reading_time_options['postfix'] ) : '';
-	$reading_time_postfix_singular = isset( $rt_reading_time_options['postfix_singular'] ) ? esc_html( $rt_reading_time_options['postfix_singular'] ) : '';
-	$reading_time_wpm              = isset( $rt_reading_time_options['wpm'] ) ? esc_html( $rt_reading_time_options['wpm'] ) : '';
-	$reading_time_check            = isset( $rt_reading_time_options['before_content'] ) ? $this->rt_convert_boolean( $rt_reading_time_options['before_content'] ) : false;
-	$reading_time_check_excerpt    = isset( $rt_reading_time_options['before_excerpt'] ) ? $this->rt_convert_boolean( $rt_reading_time_options['before_excerpt'] ) : false;
-	$reading_time_exclude_images   = isset( $rt_reading_time_options['exclude_images'] ) ? $rt_reading_time_options['exclude_images'] : false;
-
-	if ( isset( $rt_reading_time_options['post_types'] ) ) {
-		$reading_time_post_types = $rt_reading_time_options['post_types'];
-    } elseif ( !isset( $rt_reading_time_options['post_types'] ) || NULL === $rt_reading_time_options['post_types'] ) {
-		$reading_time_post_types = array();
-	} else {
-		// set defaults that have always been there for backwards compat until users set their own.
-		$reading_time_post_types = array();
-
-		foreach ( $rtwp_post_types as $post_type_option ) {
-			if ( 'attachment' === $post_type_option->name ) {
-				continue;
-			}
-			$reading_time_post_types[ $post_type_option->name ] = true;
-		}
-	}
-	if ( isset( $rt_reading_time_options['include_shortcodes'] ) ) {
-		$reading_time_shortcodes = $rt_reading_time_options['include_shortcodes'];
-	} else {
-		$reading_time_shortcodes = false;
-	}
-}
+// Variables are set by the Admin class before including this file:
+// $reading_time_label, $reading_time_postfix, $reading_time_postfix_singular,
+// $reading_time_wpm, $reading_time_check, $reading_time_check_excerpt,
+// $reading_time_exclude_images, $reading_time_shortcodes, $reading_time_post_types,
+// $rtwp_post_types
 ?>
 
 <div class="wrap">
