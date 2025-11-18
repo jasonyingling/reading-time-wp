@@ -417,11 +417,18 @@ class Reading_Time_WP {
 
 }
 
-function rtwp_init() {
-	global $reading_time_wp;
-	$reading_time_wp = new Reading_Time_WP();
-}
-add_action( 'init', 'rtwp_init' );
+/**
+ * Legacy global variable for backwards compatibility.
+ *
+ * This variable is provided for themes/plugins that may check for its existence,
+ * but the legacy class is no longer instantiated to avoid conflicts with the new
+ * OOP architecture.
+ *
+ * @since 3.0.0
+ * @deprecated 3.0.0 Use the new RTWP\Plugin instance instead.
+ */
+global $reading_time_wp;
+$reading_time_wp = null;
 
 /**
  * BACKWARDS COMPATIBILITY WRAPPER FUNCTIONS

@@ -189,6 +189,19 @@ class Plugin {
 	 * @return array Plugin options.
 	 */
 	public function get_options() {
+		// Build default post types array.
+		$default_post_types = array();
+		$post_type_args     = apply_filters( 'rtwp_post_type_args', array( 'public' => true ) );
+		$post_types         = get_post_types( $post_type_args );
+
+		foreach ( $post_types as $post_type ) {
+			// Skip attachments.
+			if ( 'attachment' === $post_type ) {
+				continue;
+			}
+			$default_post_types[ $post_type ] = true;
+		}
+
 		$defaults = array(
 			'label'              => __( 'Reading Time:', 'reading-time-wp' ) . ' ',
 			'postfix'            => __( 'minutes', 'reading-time-wp' ),
@@ -198,7 +211,7 @@ class Plugin {
 			'before_excerpt'     => true,
 			'exclude_images'     => false,
 			'include_shortcodes' => false,
-			'post_types'         => array(),
+			'post_types'         => $default_post_types,
 		);
 
 		$options = get_option( 'rt_reading_time_options', array() );
