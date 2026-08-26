@@ -4,7 +4,7 @@ Donate link: https://jasonyingling.me/donations/buy-me-a-coffee/
 Tags: reading time, estimated time, word count, time, posts, page, reading
 Requires at least: 3.0.1
 Tested up to: 7.1
-Stable tag: 2.0.17
+Stable tag: 2.0.18
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -75,11 +75,13 @@ Use the optional page_id attribute on the shortcode. e.g. [rt_reading_time label
 
 == Changelog ==
 
+= 2.0.18 =
+* Tested with WordPress 7.1
+
 = 2.0.17 =
 * Moved reading time output to function
 * Added filter for reading time output `rtwp_filter_reading_time_output` passes 4 arguments: `$output`, `$label`, `$reading_time`, `$postfix`
 * WordPress 6.7 support
-* Tested with WordPress 7.1
 
 = 2.0.16 =
 * WordPress 6.5 support
